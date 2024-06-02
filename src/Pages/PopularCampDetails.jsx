@@ -42,7 +42,7 @@ const PopularCampDetails = () => {
             </div>
           </div>
           <div  className="w-full">
-          <Link to={`/forPurchase/${_id}`}><button className="btn text-white w-full mt-2 text-xl font-semibold bg-emerald-500">Book Now</button></Link>
+          <Link to={`/forPurchase/${_id}`}><button className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]">Join Camp</button></Link>
           </div>
         </div>
       </div>

@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 
 const PopularDataCards = ({camp}) => {
-    const {name, image, location, participantCount, dateTime, fees, healthcareProfessional
+    const {_id, name, image, location, participantCount, dateTime, fees, healthcareProfessional
     } = camp;
     return (
         <div className="mb-4">
@@ -25,7 +25,7 @@ const PopularDataCards = ({camp}) => {
         <p>{dateTime}</p>
         
         <div className="w-full ">
-          <Link to={`/campDetails/${name}`}>
+          <Link to={`/popularCampDetails/${_id}`}>
             {" "}
             <button className="btn mt-4 md:20 lg:px-24 text-white bg-[#071952]">
               View Details
