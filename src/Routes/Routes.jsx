@@ -9,6 +9,7 @@ import Register from "../Pages/Register";
 import ErrorPage from "../Components/ErrorPage";
 import PopularCampDetails from "../Pages/PopularCampDetails";
 
+
  export const router = createBrowserRouter([
     {
       path: "/",
@@ -36,7 +37,7 @@ import PopularCampDetails from "../Pages/PopularCampDetails";
             path: '/popularCampDetails/:id',
             element: <PopularCampDetails></PopularCampDetails>,
             loader: () => fetch('http://localhost:5000/popularData')
-        }
+        },
       ]
     },
   ]);
