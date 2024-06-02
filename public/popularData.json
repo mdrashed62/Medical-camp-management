@@ -1,0 +1,65 @@
+{
+    "popularCamps": [
+      {
+        "name": "Heart Health Camp",
+        "image": "https://i.postimg.cc/nzJPcGvR/91350678.jpg",
+        "fees": 50,
+        "dateTime": "2024-06-15T09:00:00",
+        "location": "City Hospital, New York",
+        "healthcareProfessional": "Dr. John Doe",
+        "participantCount": 120,
+        "description": "This camp focuses on heart health, offering free check-ups, consultations, and advice on maintaining a healthy heart."
+      },
+      {
+        "name": "Diabetes Awareness Camp",
+        "image": "https://i.postimg.cc/5N0k00CV/92634101.jpg",
+        "fees": 30,
+        "dateTime": "2024-07-10T10:00:00",
+        "location": "Community Center, San Francisco",
+        "healthcareProfessional": "Dr. Jane Smith",
+        "participantCount": 85,
+        "description": "Join us for a comprehensive diabetes awareness camp. Get your blood sugar levels checked and receive guidance on managing diabetes."
+      },
+      {
+        "name": "Dental Checkup Camp",
+        "image": "https://i.postimg.cc/MKvdwFCZ/DSC-0140.jpg",
+        "fees": 20,
+        "dateTime": "2024-08-20T08:00:00",
+        "location": "Downtown Clinic, Los Angeles",
+        "healthcareProfessional": "Dr. Emily Johnson",
+        "participantCount": 95,
+        "description": "Attend our dental checkup camp for free consultations, teeth cleaning, and advice on maintaining oral hygiene."
+      },
+      {
+        "name": "Pediatric Health Camp",
+        "image": "https://i.postimg.cc/85KJ7TvH/3506101-454364081.jpg",
+        "fees": 40,
+        "dateTime": "2024-09-05T09:30:00",
+        "location": "Children's Hospital, Chicago",
+        "healthcareProfessional": "Dr. Michael Brown",
+        "participantCount": 110,
+        "description": "Our pediatric health camp offers comprehensive health check-ups for children, including vaccinations and consultations."
+      },
+      {
+        "name": "Vision Screening Camp",
+        "image": "https://i.postimg.cc/kg3V612k/227820-sri-city.webp",
+        "fees": 25,
+        "dateTime": "2024-10-15T11:00:00",
+        "location": "Vision Care Center, Houston",
+        "healthcareProfessional": "Dr. Sarah Davis",
+        "participantCount": 80,
+        "description": "Get your vision tested at our vision screening camp. We provide free eye exams and advice on maintaining good eye health."
+      },
+      {
+        "name": "Orthopedic Camp",
+        "image": "https://i.postimg.cc/GtPpkr8V/english-sentinelassam-import-h-upload-2022-11-23-415144-health1.jpg",
+        "fees": 60,
+        "dateTime": "2024-11-20T10:30:00",
+        "location": "Orthopedic Hospital, Miami",
+        "healthcareProfessional": "Dr. David Wilson",
+        "participantCount": 70,
+        "description": "Our orthopedic camp offers consultations and check-ups for bone and joint health, including free X-rays and physiotherapy advice."
+      }
+    ]
+  }
+  

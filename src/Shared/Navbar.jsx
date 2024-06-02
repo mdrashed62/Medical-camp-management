@@ -78,7 +78,7 @@ const Navbar = () => {
           <div className="w-12 h-12">
             <img className="rounded-lg" src={mediLogo} alt="Logo" />
           </div>
-          <p className="text-green-500 ml-2 font-bold">Medi Camp 360</p>
+          <p className="text-[#071952] ml-2 font-bold">Medi Camp 360</p>
         </div>
       </div>
 
