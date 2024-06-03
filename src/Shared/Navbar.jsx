@@ -111,6 +111,7 @@ const Navbar = () => {
               className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
             >
               <li>{user?.displayName}</li>
+             <li><Link to='/dashboard/analytics'>Dashboard</Link></li>
               <li className="mt-4">
                 <button
                   onClick={handleSignOut}

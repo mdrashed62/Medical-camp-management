@@ -4,15 +4,15 @@ import { useContext, useState } from "react";
 import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../Providers/AuthProviders";
+import useAxiosPublic from "../Components/Hooks/useAxiosPublic";
 
 
 
 const Register = () => {
+  const axiosPublic = useAxiosPublic();
   const [registerError, setRegisterError] = useState('')
   const [showPassword, setShowPassword] = useState(false);
   
-  document.title = "Register | Epic Eventistry ";
-
     const {createUser, updateUserData, setUser} = useContext(AuthContext)
     const navigate = useNavigate()
     const from = '/'
@@ -46,23 +46,31 @@ const Register = () => {
         createUser(email, password, name, photo)
         .then(result =>{
             console.log(result.user)
-            updateUserData(name, photo)
+            updateUserData(name, photo) 
             .then(() =>{
               setUser((prevUser)=> {
                 return {...prevUser, displayName:name, photoURL: photo};
               })
-             
-              Swal.fire({
-                position: "top",
-                icon: "success",
-                title: "Registration Successful",
-                showConfirmButton: false,
-                timer: 2000
-              });
-              navigate(from)
 
-           
-              e.target.reset()
+              const userInfo = {
+                name: name,
+                email: email
+              }
+             axiosPublic.post('/users', userInfo)
+             .then(res => {
+              if(res.data.insertedId){
+                console.log('user added to the database')
+                Swal.fire({
+                  position: "top",
+                  icon: "success",
+                  title: "Registration Successful",
+                  showConfirmButton: false,
+                  timer: 2000
+                });
+                navigate(from)
+                e.target.reset()
+              }
+             })
               
             })
         })

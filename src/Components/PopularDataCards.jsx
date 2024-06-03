@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 
 const PopularDataCards = ({camp}) => {
     const {_id, name, image, location, participantCount, dateTime, fees, healthcareProfessional
-    } = camp;
+    } = camp || {};
+
     return (
         <div className="mb-4">
              <div className="card  bg-base-100 shadow-xl">
