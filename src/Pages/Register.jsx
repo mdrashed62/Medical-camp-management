@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../Providers/AuthProviders";
 import useAxiosPublic from "../Components/Hooks/useAxiosPublic";
+import SocialLogin from "../Components/SocialLogin";
 
 
 
@@ -122,7 +123,7 @@ const Register = () => {
           <p className="text-center">Already have an account? please <span className="text-red-500 font-bold"><Link to='/login'>Login</Link></span></p>
         </div>
       </form>
-      
+      <SocialLogin></SocialLogin>
     </div>
     );
 };

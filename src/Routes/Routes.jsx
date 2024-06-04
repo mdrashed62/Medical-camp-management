@@ -17,6 +17,7 @@ import OrganizerProfile from "../Components/AdminDashBoard/OrganizerProfile";
 import AddCamps from "../Components/AdminDashBoard/AddCamps";
 import ManageCamps from "../Components/AdminDashBoard/ManageCamps";
 import ManageRegisteredCamps from "../Components/AdminDashBoard/ManageRegisteredCamps";
+import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizerProfile";
 
 
 
@@ -87,6 +88,10 @@ import ManageRegisteredCamps from "../Components/AdminDashBoard/ManageRegistered
         {
           path: 'manageRegisteredCamps',
           element: <ManageRegisteredCamps></ManageRegisteredCamps>
+        },
+        {
+          path: 'updateOrganizerProfile',
+          element: <UpdateOrganizerProfile></UpdateOrganizerProfile>
         }
       ]
     }
