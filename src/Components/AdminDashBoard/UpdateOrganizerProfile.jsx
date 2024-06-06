@@ -4,7 +4,6 @@ import { AuthContext } from "../../Providers/AuthProviders";
 const UpdateOrganizerProfile = () => {
   const { updateUserData } = useContext(AuthContext);
   const handleUpdate = (e) => {
-    console.log(e);
     e.preventDefault();
     const name = e.target.name.value;
     const photo = e.target.photo.value;

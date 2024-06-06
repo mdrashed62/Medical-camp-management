@@ -1,8 +1,29 @@
+import { useContext, useEffect, useState } from "react";
 import { NavLink, Outlet } from "react-router-dom";
+import { AuthContext } from "../Providers/AuthProviders";
 
 const Dashboard = () => {
-  // TODO: get isAdmin value from database;
-  const isAdmin = true;
+  const { user } = useContext(AuthContext);
+  // console.log("user", user)
+  const [loading, setLoading] = useState()
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetch("http://localhost:5000/users")
+      .then((res) => res.json())
+      .then((data) => {
+        const currentUser = data.find(u => u.email === user?.email);
+        // console.log('users', currentUser);
+        setIsAdmin(currentUser?.role === 'admin');
+       setLoading(false)
+      })
+      .catch((error) => console.error("Error fetching users:", error));
+      setLoading(false)
+  }, [user]);
+  // console.log("is admin", isAdmin)
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <div className="flex mt-4">
@@ -16,14 +37,10 @@ const Dashboard = () => {
                 </NavLink>
               </li>
               <li className="mt-2 mb-2">
-                <NavLink to="/dashboard/addCamps">
-                  Add a Camp
-                </NavLink>
+                <NavLink to="/dashboard/addCamps">Add a Camp</NavLink>
               </li>
               <li className="mb-2">
-                <NavLink to="/dashboard/manageCamps">
-                  Manage Camps
-                </NavLink>
+                <NavLink to="/dashboard/manageCamps">Manage Camps</NavLink>
               </li>
               <li>
                 <NavLink to="/dashboard/manageRegisteredCamps">
@@ -60,7 +77,7 @@ const Dashboard = () => {
         </ul>
       </div>
       <div className="flex-1">
-        <Outlet></Outlet>
+        <Outlet />
       </div>
     </div>
   );

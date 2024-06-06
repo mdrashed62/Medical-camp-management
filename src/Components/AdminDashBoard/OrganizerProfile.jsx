@@ -4,7 +4,7 @@ import { AuthContext } from "../../Providers/AuthProviders";
 
 const OrganizerProfile = () => {
     const { user } = useContext(AuthContext);
-    console.log(user)
+   
    
     return (
       <div className="flex justify-center mt-8 h-screen">

@@ -18,6 +18,7 @@ import AddCamps from "../Components/AdminDashBoard/AddCamps";
 import ManageCamps from "../Components/AdminDashBoard/ManageCamps";
 import ManageRegisteredCamps from "../Components/AdminDashBoard/ManageRegisteredCamps";
 import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizerProfile";
+import UpdateCamps from "../Pages/UpdateCamps";
 
 
 
@@ -83,7 +84,8 @@ import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizer
         },
         {
           path: 'manageCamps',
-          element: <ManageCamps></ManageCamps>
+          element: <ManageCamps></ManageCamps>,
+          loader: () => fetch('http://localhost:5000/addedCamps')
         },
         {
           path: 'manageRegisteredCamps',
@@ -92,6 +94,12 @@ import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizer
         {
           path: 'updateOrganizerProfile',
           element: <UpdateOrganizerProfile></UpdateOrganizerProfile>
+        },
+       
+        {
+          path: "updateCamps/:id",
+          element: <UpdateCamps></UpdateCamps>,
+          loader: ({params}) => fetch(`http://localhost:5000/addedCamps/${params.id}`)
         }
       ]
     }

@@ -35,9 +35,7 @@ const CampRegistrationModal = ({ camp }) => {
      participantEmail,
     };
 
-    console.log(addCamp);
-
-    
+  
 
     fetch("http://localhost:5000/registeredCamps", {
       method: "POST",
@@ -48,7 +46,6 @@ const CampRegistrationModal = ({ camp }) => {
     })
       .then((res) => res.json())
       .then((data) => {
-        // console.log(data);
         if (data) {
           Swal.fire({
             position: "top",

@@ -37,12 +37,9 @@ const AddCamps = () => {
      organizerEmail
     };
 
-  
-      console.log(addCamp);
-  
       //send data to the server
   
-      fetch("http://localhost:5000", {
+      fetch("http://localhost:5000/addedCamps", {
         method: "POST",
         headers: {
           "content-type": "application/json",
@@ -51,7 +48,6 @@ const AddCamps = () => {
       })
         .then((res) => res.json())
         .then((data) => {
-          // console.log(data);
           if (data) {
             Swal.fire({
               position: "top",

@@ -1,23 +1,20 @@
-
-import { useContext, useState } from "react";
+import { useContext, useState, useEffect } from "react";
 import { Link, useLoaderData } from "react-router-dom";
-
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProviders";
 
 const ManageCamps = () => {
   const { user } = useContext(AuthContext);
-  // console.log('auth user', user.email); important line
-  const listData = useLoaderData();
-  const [listSpot, setListSpot] = useState(listData)
+  const campsData = useLoaderData();
+  const [campData, setCampData] = useState([]);
 
-
-  const spots = listData?.filter((spot) => spot.userEmail === user?.email);
-  console.log(spots);
-
+  useEffect(() => {
+    if (campsData) {
+      setCampData(campsData.filter((camp) => camp.organizerEmail === user?.email));
+    }
+  }, [campsData, user]);
 
   const handleDelete = (id) => {
-    console.log(id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -28,65 +25,50 @@ const ManageCamps = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/touristSpots/${id}`, {
+        fetch(`http://localhost:5000/addedCamps/${id}`, {
           method: "DELETE",
         })
           .then((res) => res.json())
           .then((data) => {
-            console.log(data);
             if (data.deletedCount > 0) {
               Swal.fire({
                 title: "Deleted!",
-                text: "Your Spot has been deleted.",
+                text: "Your Camp has been deleted.",
                 icon: "success",
               });
-              const remaining = listSpot.filter(aSpot => aSpot._id !== id)
-              setListSpot(remaining)
+              setCampData((prevCampData) => prevCampData.filter((camp) => camp._id !== id));
             }
           });
       }
     });
   };
 
-  
-
   return (
     <div>
       <table className="table">
         <thead>
           <tr>
-            <th>Photo</th>
-            <th>Spot Name</th>
-            <th>Country Name</th>
-            <th>Actions</th>
+            <th className="text-xl font-bold">Camp Name</th>
+            <th className="text-xl font-bold">Location</th>
+            <th className="text-xl font-bold">Date And Time</th>
+            <th className="text-xl font-bold">Actions</th>
           </tr>
         </thead>
-
         <tbody>
-          {spots?.map((spot, index) => (
-            <tr key={index}>
+          {campData?.map((camp) => (
+            <tr key={camp._id}>
+              <td>{camp.campName}</td>
+              <td>{camp.location}</td>
+              <td>{camp.dateTime}</td>
               <td>
-                <div className="flex items-center gap-3">
-                  <div className="avatar">
-                    <div className="mask mask-squircle w-12 h-12">
-                      <img src={spot.photo} alt={`Photo of ${spot.name}`} />
-                    </div>
-                  </div>
-                </div>
-              </td>
-              <td>{spot.spotName}</td>
-              <td>{spot.countryName}</td>
-              <td>
-                <Link to={`/updateSpot/${spot._id}`}>
-
-                <button className="btn btn-ghost btn-xs"  >
-                Update
-                </button>
-
+                <Link to={`/dashboard/updateCamps/${camp._id}`}>
+                  <button className="btn bg-[#071952] text-white btn-ghost btn-xs">
+                    Update
+                  </button>
                 </Link>
                 <button
-                  className="btn btn-ghost btn-xs"
-                  onClick={() => handleDelete(spot._id)}
+                  className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
+                  onClick={() => handleDelete(camp._id)}
                 >
                   Delete
                 </button>
