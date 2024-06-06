@@ -24,7 +24,7 @@ const AvailableCampsCards = ({ camp }) => {
           <p>{dateTime}</p>
 
           <div className="w-full ">
-            <Link to={`/addedCampDetails/${_id}`}>
+            <Link to={`/dashboard/addedCampsDetails/${_id}`}>
               {" "}
               <button className="btn mt-4 md:20 lg:px-24 text-white bg-emerald-500">
                 View Details
