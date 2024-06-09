@@ -20,6 +20,7 @@ import ManageRegisteredCamps from "../Components/AdminDashBoard/ManageRegistered
 import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizerProfile";
 import UpdateCamps from "../Pages/UpdateCamps";
 import AddedCampsDetails from "../Pages/AddedCampsDetails";
+import Payment from "../Pages/Dashboard/Payment/Payment";
 
 
 
@@ -73,6 +74,10 @@ import AddedCampsDetails from "../Pages/AddedCampsDetails";
         {
           path: 'paymentHistory',
           element: <PaymentHistory></PaymentHistory>
+        },
+        {
+          path: 'payment',
+          element: <Payment></Payment>
         },
 
         // admin routes

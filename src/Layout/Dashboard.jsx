@@ -11,7 +11,7 @@ const Dashboard = () => {
     fetch("http://localhost:5000/users")
       .then((res) => res.json())
       .then((data) => {
-        const currentUser = data.find(u => u.email === user?.email);
+        const currentUser = data?.find(u => u.email === user?.email);
         setIsAdmin(currentUser?.role === 'admin');
        setLoading(false)
       })
