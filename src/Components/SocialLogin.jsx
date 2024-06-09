@@ -16,6 +16,7 @@ const SocialLogin = () => {
     socialProvider()
       .then((result) => {
         console.log("Login successful:", result.user);
+        
         const userInfo = {
           email: result.user?.email,
           name: result.user?.displayName,

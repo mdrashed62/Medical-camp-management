@@ -6,6 +6,7 @@ import { AuthContext } from "../../Providers/AuthProviders";
 const ManageCamps = () => {
   const { user } = useContext(AuthContext);
   const campsData = useLoaderData();
+  console.log(campsData)
   const [campData, setCampData] = useState([]);
 
   useEffect(() => {
@@ -56,6 +57,7 @@ const ManageCamps = () => {
         </thead>
         <tbody>
           {campData?.map((camp) => (
+           
             <tr key={camp._id}>
               <td>{camp.campName}</td>
               <td>{camp.location}</td>

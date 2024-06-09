@@ -67,7 +67,8 @@ import AddedCampsDetails from "../Pages/AddedCampsDetails";
         },
         {
           path: 'registeredCamps',
-          element: <RegisteredCamps></RegisteredCamps>
+          element: <RegisteredCamps></RegisteredCamps>,
+          loader: () => fetch('http://localhost:5000/registeredCamps')
         },
         {
           path: 'paymentHistory',

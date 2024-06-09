@@ -4,7 +4,6 @@ import { AuthContext } from "../Providers/AuthProviders";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  // console.log("user", user)
   const [loading, setLoading] = useState()
   const [isAdmin, setIsAdmin] = useState(false);
 
@@ -13,14 +12,12 @@ const Dashboard = () => {
       .then((res) => res.json())
       .then((data) => {
         const currentUser = data.find(u => u.email === user?.email);
-        // console.log('users', currentUser);
         setIsAdmin(currentUser?.role === 'admin');
        setLoading(false)
       })
       .catch((error) => console.error("Error fetching users:", error));
       setLoading(false)
   }, [user]);
-  // console.log("is admin", isAdmin)
   if (loading) {
     return <div>Loading...</div>;
   }
