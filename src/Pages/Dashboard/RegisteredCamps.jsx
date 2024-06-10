@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { useLoaderData } from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProviders";
 
@@ -73,6 +73,7 @@ const RegisteredCamps = () => {
                   {camp.paymentStatus === "Paid" ? (
                     <button className="btn btn-sm" disabled>Paid</button>
                   ) : (
+                    <Link to={`/dashboard/payment/${camp._id}`}>
                     <button
                       className="btn btn-sm"
                       onClick={() => handlePayment(camp)}
@@ -80,6 +81,7 @@ const RegisteredCamps = () => {
                     >
                       Pay
                     </button>
+                    </Link>
                   )}
                 </td>
                 <td>{camp.confirmationStatus}</td>

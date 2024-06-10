@@ -76,8 +76,9 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
           element: <PaymentHistory></PaymentHistory>
         },
         {
-          path: 'payment',
-          element: <Payment></Payment>
+          path: 'payment/:id',
+          element: <Payment></Payment>,
+          loader: () => fetch('http://localhost:5000/registeredCamps')
         },
 
         // admin routes
