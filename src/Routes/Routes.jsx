@@ -21,6 +21,7 @@ import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizer
 import UpdateCamps from "../Pages/UpdateCamps";
 import AddedCampsDetails from "../Pages/AddedCampsDetails";
 import Payment from "../Pages/Dashboard/Payment/Payment";
+import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfile";
 
 
 
@@ -32,11 +33,12 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
       children: [
         {
             path: '/',
-            element: <Home></Home>
+            element: <Home></Home>,
         },
         {
             path: '/availableCamps',
-            element: <AvailableCamps></AvailableCamps>
+            element: <AvailableCamps></AvailableCamps>,
+            loader: () => fetch('http://localhost:5000/addedCampsCount')
         },
       
         {
@@ -79,6 +81,10 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
           path: 'payment/:id',
           element: <Payment></Payment>,
           loader: () => fetch('http://localhost:5000/registeredCamps')
+        },
+        {
+          path: 'updateParticipantProfile',
+          element: <UpdateParticipantProfile></UpdateParticipantProfile>
         },
 
         // admin routes

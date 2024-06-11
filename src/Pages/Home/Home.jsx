@@ -1,14 +1,52 @@
+import { useEffect, useState } from "react";
 import Banner from "./Banner/Banner";
 import PopularCamp from "./PopularCamp";
+import axios from "axios";
 
 
 const Home = () => {
-    return (
-        <div>
-          <Banner></Banner>
-          <PopularCamp></PopularCamp>
-        </div>
-    );
+  const [searchTerm, setSearchTerm] = useState("");
+  const [camps, setCamps] = useState([]);
+
+  useEffect(() => {
+    const getCampsData = async () => {
+      const response = await axios.get("http://localhost:5000/popularData");
+      setCamps(response.data);
+    };
+    getCampsData();
+  }, []);
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    setSearchTerm(e.target.search.value);
+  };
+
+  const filteredCamps = camps.filter((camp) =>
+    camp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    camp.healthcareProfessional.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  return (
+    <div>
+      <form onSubmit={handleSearch} className="flex">
+        <input
+          type="text"
+          placeholder="Search for camp"
+          name="search"
+          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+        />
+        <button
+          type="submit"
+          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+        >
+          Search
+        </button>
+      </form>
+      <Banner />
+      <PopularCamp camps={filteredCamps} />
+    </div>
+  );
 };
 
 export default Home;

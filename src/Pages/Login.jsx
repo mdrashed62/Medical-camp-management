@@ -5,68 +5,68 @@ import { FaEye, FaEyeSlash } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Providers/AuthProviders";
 import SocialLogin from "../Components/SocialLogin";
+import { useForm } from "react-hook-form";
 
 
 const Login = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const { signIn, googleLogin} = useContext(AuthContext);
   const location = useLocation();
   const navigate = useNavigate();
 
   const [showPassword, setShowPassword] = useState();
 
-  const handleLogin = (e) => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const email = form.get("email");
-    const password = form.get("password");
-    signIn(email, password)
-   
+  const onSubmit = data => {
+    const { email, password } = data;
 
-    .then(result => {
-      console.log(result.user)
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Login Successful",
-        showConfirmButton: false,
-        timer: 2000
-      });
-      navigate(location?.state? location.state: '/')
-    })
-    .catch((error) => {
-      console.log(error)
-      Swal.fire({
+    signIn(email, password)
+      .then(result => {
+        console.log(result.user);
+        Swal.fire({
+          position: "top",
+          icon: "success",
+          title: "Login Successful",
+          showConfirmButton: false,
+          timer: 2000
+        });
+        navigate(location?.state?.from || '/');
+      })
+      .catch((error) => {
+        console.error("Login failed:", error);
+        Swal.fire({
           position: "top",
           icon: "error",
           title: "Login Failed",
           text: "Incorrect email or password. Please try again.",
           showConfirmButton: true,
+        });
       });
-  });
   };
 
   return (
     <div >
       <div className="card shrink-0 w-full mb-4 max-w-sm shadow-xl bg-gray-300 border  mx-auto">
-        <form onSubmit={handleLogin} className="card-body">
+        <form onSubmit={handleSubmit(onSubmit)} className="card-body">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Email</span>
             </label>
             <input
               type="email"
+              {...register("email", { required: true })}
               name="email"
               placeholder="email"
               className="input input-bordered"
               required
             />
+            {errors.name && <span className="text-red-500">Email is required</span>}
           </div>
           <div className="relative">
         <div className="form-control">
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type={showPassword? 'text':'password'} placeholder="password" name='password' className="input input-bordered" required />
+          <input {...register("password")} type={showPassword? 'text':'password'} placeholder="password" name='password' className="input input-bordered" required />
          <span className="absolute top-[53px] right-3" onClick={() =>setShowPassword(!showPassword)}>
          {
             showPassword? <FaEyeSlash></FaEyeSlash> : <FaEye></FaEye>

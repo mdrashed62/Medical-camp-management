@@ -6,8 +6,8 @@ import { AuthContext } from "../../Providers/AuthProviders";
 const RegisteredCamps = () => {
   const { user } = useContext(AuthContext);
   const registeredData = useLoaderData();
-  console.log(registeredData)
   const [campData, setCampData] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (registeredData) {
@@ -45,11 +45,37 @@ const RegisteredCamps = () => {
   };
 
   const handlePayment = () => {
+    // Payment handling logic
+  };
 
-  }
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const term = e.target.search.value.toLowerCase();
+    setSearchTerm(term);
+  };
+  console.log(campData)
+
+  const filteredCamps = campData.filter((camp) =>
+    camp.campName.toLowerCase().includes(searchTerm) ||
+    camp.healthcareProfessional.toLowerCase().includes(searchTerm)
+  );
 
   return (
-    <div> 
+    <div>
+      <form onSubmit={handleSearch} className="flex">
+        <input
+          type="text"
+          placeholder="Search for camp"
+          name="search"
+          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+        />
+        <button
+          type="submit"
+          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+        >
+          Search
+        </button>
+      </form>
       <table className="table">
         <thead>
           <tr>
@@ -60,53 +86,48 @@ const RegisteredCamps = () => {
             <th className="font-bold">Confirmation Status</th>
             <th className="font-bold">Cancel</th>
             <th className="font-bold">Feedback</th>
-            
           </tr>
         </thead>
         <tbody>
-            {campData?.map((camp) => (
-              <tr key={camp._id}>
-                <td>{camp.campName}</td>
-                <td>{camp.fees} $</td>
-                <td>{camp.participantName}</td>
-                <td>
-                  {camp.paymentStatus === "Paid" ? (
-                    <button className="btn btn-sm" disabled>Paid</button>
-                  ) : (
-                    <Link to={`/dashboard/payment/${camp._id}`}>
+          {filteredCamps.map((camp) => (
+            <tr key={camp._id}>
+              <td>{camp.campName}</td>
+              <td>{camp.fees} $</td>
+              <td>{camp.participantName}</td>
+              <td>
+                {camp.paymentStatus === "Paid" ? (
+                  <button className="btn btn-sm" disabled>Paid</button>
+                ) : (
+                  <Link to={`/dashboard/payment/${camp._id}`}>
                     <button
                       className="btn btn-sm"
                       onClick={() => handlePayment(camp)}
-                      // disabled={paymentProcessing}
                     >
                       Pay
                     </button>
-                    </Link>
-                  )}
-                </td>
-                <td>{camp.confirmationStatus}</td>
-                <td>
-                  <button
-                    className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
-                    onClick={() => handleDelete(camp._id)}
-                  >
-                    Cancel
-                  </button>
-                </td>
-                <td>
-                  <button
-                    className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
-                  >
-                    Feedback
-                  </button>
-                </td>
-              </tr>
-            ))}
-          </tbody>
+                  </Link>
+                )}
+              </td>
+              <td>{camp.confirmationStatus}</td>
+              <td>
+                <button
+                  className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
+                  onClick={() => handleDelete(camp._id)}
+                >
+                  Cancel
+                </button>
+              </td>
+              <td>
+                <button className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs">
+                  Feedback
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
       </table>
     </div>
   );
 };
 
 export default RegisteredCamps;
-

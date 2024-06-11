@@ -1,5 +1,6 @@
 import { useContext } from "react";
 import { AuthContext } from "../../Providers/AuthProviders";
+import Swal from "sweetalert2";
 
 const UpdateOrganizerProfile = () => {
   const { updateUserData } = useContext(AuthContext);
@@ -9,6 +10,12 @@ const UpdateOrganizerProfile = () => {
     const photo = e.target.photo.value;
 
     updateUserData(name, photo).then(() => {});
+    Swal.fire({
+      position: "top",
+      icon: "success",
+      title: "Profile Updated Successfully",
+      showConfirmButton: true,
+    });
   };
 
   return (

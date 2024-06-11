@@ -3,73 +3,73 @@ import { useContext, useState } from "react";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { AuthContext } from "../Providers/AuthProviders";
 import SocialLogin from "../Components/SocialLogin";
+import { useForm } from "react-hook-form";
+
+
 
 const Register = () => {
+  const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
   const { createUser} = useContext(AuthContext);
   const navigate = useNavigate();
   const from = '/';
 
-  const handleRegister = (e) => {
-    e.preventDefault();
-    const form = new FormData(e.currentTarget);
-    const name = form.get('name');
-    const email = form.get('email');
-    const photo = form.get('photo');
-    const password = form.get('password');
+
+  const onSubmit = data => {
+    const { name, email, photo, password } = data;
     const role = 'user';
 
     createUser(email, password)
       .then(result => {
-        console.log(result.user)
-        // new user has been created
-        const user = {name, email, photo, role};
+        console.log(result.user);
+        const user = { name, email, photo, role };
         fetch('http://localhost:5000/users', {
           method: 'POST',
           headers: {
-            'content-type': 'application/json'
+            'Content-Type': 'application/json'
           },
           body: JSON.stringify(user)
         })
-        .then (res => res.json())
-        .then (data => {
-          console.log(data)
-        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+        });
       })
       .catch(error => {
         console.error("Error during registration:", error);
       });
-      navigate(from);
+    navigate(from);
   };
 
   return (
     <div className="card shrink-0 w-full mb-6 max-w-sm shadow-2xl bg-base-300 mx-auto">
-      <form onSubmit={handleRegister} className="card-body">
+      <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="form-control">
           <label className="label">
             <span className="label-text">Name</span>
           </label>
-          <input type="text" name='name' placeholder="name" className="input input-bordered" required />
+          <input type="text" {...register("name")} name='name' placeholder="name" className="input input-bordered" required />
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" name='email' placeholder="email" className="input input-bordered" required />
+          <input type="email" {...register("email", { required: true })} name='email' placeholder="email" className="input input-bordered" required />
+          {errors.name && <span className="text-red-500">Email is required</span>}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Photo Url</span>
           </label>
-          <input type="text" name='photo' placeholder="Photo Url" className="input input-bordered" required />
+          <input type="text" {...register("photo")} name='photo' placeholder="Photo Url" className="input input-bordered" required />
         </div>
         <div className="relative">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input type={showPassword ? 'text' : 'password'} placeholder="password" name='password' className="input input-bordered" required />
+            <input type={showPassword ? 'text' : 'password'} {...register("password")} placeholder="password" name='password' className="input input-bordered" required />
             <span className="absolute top-[53px] right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>

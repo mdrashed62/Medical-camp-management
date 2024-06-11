@@ -6,7 +6,7 @@ const PopularDataCards = ({camp}) => {
     } = camp || {};
 
     return (
-        <div className="mb-4">
+        <div className="mb-4 .camp-card">
              <div className="card  bg-base-100 shadow-xl">
       <figure className="px-10 pt-10">
         <img src={image} className="rounded-xl h-64 w-96" />
