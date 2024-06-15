@@ -1,19 +1,21 @@
 import { useContext, useState, useEffect } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link, useLoaderData} from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProviders";
 
 const RegisteredCamps = () => {
   const { user } = useContext(AuthContext);
-  const registeredData = useLoaderData();
+  const registeredCampsData = useLoaderData();
   const [campData, setCampData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  console.log("camp data from registered camps", campData)
 
   useEffect(() => {
-    if (registeredData) {
-      setCampData(registeredData.filter((camp) => camp.participantEmail === user?.email));
+    if (registeredCampsData) {
+      setCampData(registeredCampsData?.filter((camp) => camp.participantEmail === user?.email));
     }
-  }, [registeredData, user]);
+  }, [registeredCampsData, user]);
+  
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -34,7 +36,7 @@ const RegisteredCamps = () => {
             if (data.deletedCount > 0) {
               Swal.fire({
                 title: "Deleted!",
-                text: "Your Camp has been deleted.",
+                text: "Your camp has been deleted.",
                 icon: "success",
               });
               setCampData((prevCampData) => prevCampData.filter((camp) => camp._id !== id));
@@ -53,7 +55,6 @@ const RegisteredCamps = () => {
     const term = e.target.search.value.toLowerCase();
     setSearchTerm(term);
   };
-  console.log(campData)
 
   const filteredCamps = campData.filter((camp) =>
     camp.campName.toLowerCase().includes(searchTerm) ||
@@ -89,41 +90,47 @@ const RegisteredCamps = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredCamps.map((camp) => (
-            <tr key={camp._id}>
-              <td>{camp.campName}</td>
-              <td>{camp.fees} $</td>
-              <td>{camp.participantName}</td>
-              <td>
-                {camp.paymentStatus === "Paid" ? (
-                  <button className="btn btn-sm" disabled>Paid</button>
-                ) : (
-                  <Link to={`/dashboard/payment/${camp._id}`}>
-                    <button
-                      className="btn btn-sm"
-                      onClick={() => handlePayment(camp)}
-                    >
-                      Pay
-                    </button>
-                  </Link>
-                )}
-              </td>
-              <td>{camp.confirmationStatus}</td>
-              <td>
-                <button
-                  className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
-                  onClick={() => handleDelete(camp._id)}
-                >
-                  Cancel
-                </button>
-              </td>
-              <td>
-                <button className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs">
-                  Feedback
-                </button>
-              </td>
+          {filteredCamps.length > 0 ? (
+            filteredCamps.map((camp) => (
+              <tr key={camp._id}>
+                <td>{camp.campName}</td>
+                <td>{camp.fees} $</td>
+                <td>{camp.participantName}</td>
+                <td>
+                  {camp.paymentStatus === "Paid" ? (
+                    <button className="btn btn-sm" disabled>Paid</button>
+                  ) : (
+                    <Link to={`/dashboard/payment/${camp._id}`}>
+                      <button
+                        className="btn btn-sm"
+                        onClick={() => handlePayment(camp)}
+                      >
+                        Pay
+                      </button>
+                    </Link>
+                  )}
+                </td>
+                <td>{camp.confirmationStatus}</td>
+                <td>
+                  <button
+                    className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
+                    onClick={() => handleDelete(camp._id)}
+                  >
+                    Cancel
+                  </button>
+                </td>
+                <td>
+                  <button className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs">
+                    Feedback
+                  </button>
+                </td>
+              </tr>
+            ))
+          ) : (
+            <tr>
+              <td colSpan="7" className="text-center">No camps found</td>
             </tr>
-          ))}
+          )}
         </tbody>
       </table>
     </div>

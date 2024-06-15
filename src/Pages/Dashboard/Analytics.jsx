@@ -1,22 +1,26 @@
 import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import axios from 'axios';
+import { AuthContext } from '../../Providers/AuthProviders';
 
 const Analytics = () => {
+  const { user } = useContext(AuthContext);
   const [campData, setCampData] = useState([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/registeredCamps');
+        const response = await axios.get(`http://localhost:5000/registeredCamps/user/${user.email}`);
         setCampData(response.data);
       } catch (error) {
         console.error('Error fetching camp data:', error);
       }
     };
 
-    fetchData();
-  }, []);
+    if (user && user.email) {
+      fetchData();
+    }
+  }, [user]);
 
   return (
     <div>
@@ -25,7 +29,7 @@ const Analytics = () => {
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="campName" />
         <YAxis />
-        <Tooltip/>
+        <Tooltip />
         <Legend />
         <Bar dataKey="participantCount" fill="#8884d8" />
         <Bar dataKey="fees" name="Camp Fees" fill="#82ca9d" />

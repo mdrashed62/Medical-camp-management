@@ -79,8 +79,7 @@ import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfil
         },
         {
           path: 'payment/:id',
-          element: <Payment></Payment>,
-          loader: () => fetch('http://localhost:5000/registeredCamps')
+          element: <Payment></Payment>
         },
         {
           path: 'updateParticipantProfile',
