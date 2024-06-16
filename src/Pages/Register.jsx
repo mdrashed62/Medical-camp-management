@@ -9,40 +9,42 @@ const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { createUser, updateUserData, setUser } = useContext(AuthContext);
+  const { createUser, updateUserData, setLoading, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const from = '/';
 
-  const onSubmit = data => {
+  const onSubmit = (data) => {
     const { name, email, photo, password } = data;
     const role = 'user';
 
+    // Example of createUser function usage (you need to adjust this according to your implementation)
     createUser(email, password)
       .then(result => {
-        const user = result.user;
-        console.log('From register', user);
-
-        // Update user profile with name and photo
-        return updateUserData(user, { displayName: name, photoURL: photo });
-      })
-      .then(() => {
-        // Save user to the database
-        return fetch('http://localhost:5000/users', {
+        console.log(result.user); // Assuming createUser returns a promise with user information
+        const user = { name, email, photo, role };
+        // Example of how you might handle additional user data (you should adapt this to your backend/API)
+        fetch('http://localhost:5000/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ name, email, photo, role })
+          body: JSON.stringify(user)
+        })
+        .then(res => res.json())
+        .then(data => {
+          console.log(data);
+          // Update user data in local context/state if needed
+          setUser((prevUser) => ({
+            ...prevUser,
+            displayName: name,
+            photoURL: photo
+          }));
+          // Navigate after successful registration
+          navigate(from);
+        })
+        .catch(error => {
+          console.error("Error during user data update:", error);
         });
-      })
-      .then(response => response.json())
-      .then(responseData => {
-        console.log(responseData);
-        // Set the updated user in context
-        setUser({ displayName: name, photoURL: photo });
-
-        // Navigate to the specified route after successful registration
-        navigate(from, { replace: true });
       })
       .catch(error => {
         console.error("Error during registration:", error);
@@ -56,61 +58,39 @@ const Register = () => {
           <label className="label">
             <span className="label-text">Name</span>
           </label>
-          <input
-            type="text"
-            {...register("name", { required: true })}
-            placeholder="name"
-            className="input input-bordered"
-          />
+          <input type="text" {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" required />
           {errors.name && <span className="text-red-500">Name is required</span>}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input
-            type="email"
-            {...register("email", { required: true })}
-            placeholder="email"
-            className="input input-bordered"
-          />
+          <input type="email" {...register("email", { required: true })} name="email" placeholder="Email" className="input input-bordered" required />
           {errors.email && <span className="text-red-500">Email is required</span>}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Photo Url</span>
           </label>
-          <input
-            type="text"
-            {...register("photo", { required: true })}
-            placeholder="Photo Url"
-            className="input input-bordered"
-          />
-          {errors.photo && <span className="text-red-500">Photo URL is required</span>}
+          <input type="text" {...register("photo")} name="photo" placeholder="Photo URL" className="input input-bordered" required />
         </div>
         <div className="relative">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input
-              type={showPassword ? 'text' : 'password'}
-              {...register("password", { required: true, minLength: 6 })}
-              placeholder="password"
-              className="input input-bordered"
-            />
+            <input type={showPassword ? 'text' : 'password'} {...register("password", { required: true })} name="password" placeholder="Password" className="input input-bordered" required />
             <span className="absolute top-[53px] right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
-            {errors.password && <span className="text-red-500">Password is required (min 6 characters)</span>}
           </div>
         </div>
         <div className="form-control mt-6">
-          <button className="btn w-full btn-primary">Register</button>
+          <button type="submit" className="btn w-full btn-primary">Register</button>
           <p className="text-center">Already have an account? Please <span className="text-red-500 font-bold"><Link to='/login'>Login</Link></span></p>
         </div>
       </form>
-      <SocialLogin />
+      <SocialLogin /> {/* Optional: Include Social Login component if needed */}
     </div>
   );
 };
