@@ -9,7 +9,7 @@ const Register = () => {
   const { register, handleSubmit, formState: { errors } } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
-  const { createUser, updateUserData, setLoading, setUser } = useContext(AuthContext);
+  const { createUser, updateUserData, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
   const from = '/';
 
@@ -17,33 +17,32 @@ const Register = () => {
     const { name, email, photo, password } = data;
     const role = 'user';
 
-    // Example of createUser function usage (you need to adjust this according to your implementation)
     createUser(email, password)
       .then(result => {
-        console.log(result.user); // Assuming createUser returns a promise with user information
-        const user = { name, email, photo, role };
-        // Example of how you might handle additional user data (you should adapt this to your backend/API)
-        fetch('http://localhost:5000/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(user)
-        })
-        .then(res => res.json())
-        .then(data => {
-          console.log(data);
-          // Update user data in local context/state if needed
-          setUser((prevUser) => ({
-            ...prevUser,
-            displayName: name,
-            photoURL: photo
-          }));
-          // Navigate after successful registration
-          navigate(from);
-        })
-        .catch(error => {
-          console.error("Error during user data update:", error);
+        const user = result.user;
+        console.log('Here the user', user);
+        updateUserData(name, photo).then(() => {
+          const newUser = { name, email, photo, role };
+          fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(newUser)
+          })
+            .then(res => res.json())
+            .then(data => {
+              console.log(data);
+              setUser((prevUser) => ({
+                ...prevUser,
+                displayName: name,
+                photoURL: photo
+              }));
+              navigate(from);
+            })
+            .catch(error => {
+              console.error("Error during user data update:", error);
+            });
         });
       })
       .catch(error => {

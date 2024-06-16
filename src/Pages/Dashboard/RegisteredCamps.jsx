@@ -1,5 +1,5 @@
 import { useContext, useState, useEffect } from "react";
-import { Link, useLoaderData} from "react-router-dom";
+import { Link, useLoaderData } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProviders";
 
@@ -8,14 +8,16 @@ const RegisteredCamps = () => {
   const registeredCampsData = useLoaderData();
   const [campData, setCampData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
-  console.log("camp data from registered camps", campData)
 
   useEffect(() => {
     if (registeredCampsData) {
-      setCampData(registeredCampsData?.filter((camp) => camp.participantEmail === user?.email));
+      setCampData(
+        registeredCampsData?.filter(
+          (camp) => camp.participantEmail === user?.email
+        )
+      );
     }
   }, [registeredCampsData, user]);
-  
 
   const handleDelete = (id) => {
     Swal.fire({
@@ -39,16 +41,22 @@ const RegisteredCamps = () => {
                 text: "Your camp has been deleted.",
                 icon: "success",
               });
-              setCampData((prevCampData) => prevCampData.filter((camp) => camp._id !== id));
+              setCampData((prevCampData) =>
+                prevCampData.filter((camp) => camp._id !== id)
+              );
             }
           });
       }
     });
   };
 
-  const handlePayment = () => {
-    // Payment handling logic
-  };
+  // const handlePaymentSuccess = (campId) => {
+  //   setCampData((prevCampData) =>
+  //     prevCampData.map((camp) =>
+  //       camp._id === campId ? { ...camp, paymentStatus: "Paid" } : camp
+  //     )
+  //   );
+  // };
 
   const handleSearch = (e) => {
     e.preventDefault();
@@ -56,9 +64,10 @@ const RegisteredCamps = () => {
     setSearchTerm(term);
   };
 
-  const filteredCamps = campData.filter((camp) =>
-    camp.campName.toLowerCase().includes(searchTerm) ||
-    camp.healthcareProfessional.toLowerCase().includes(searchTerm)
+  const filteredCamps = campData.filter(
+    (camp) =>
+      camp.campName.toLowerCase().includes(searchTerm) ||
+      camp.healthcareProfessional.toLowerCase().includes(searchTerm)
   );
 
   return (
@@ -98,12 +107,14 @@ const RegisteredCamps = () => {
                 <td>{camp.participantName}</td>
                 <td>
                   {camp.paymentStatus === "Paid" ? (
-                    <button className="btn btn-sm" disabled>Paid</button>
+                    <button className="btn btn-sm" disabled>
+                      Paid
+                    </button>
                   ) : (
                     <Link to={`/dashboard/payment/${camp._id}`}>
                       <button
                         className="btn btn-sm"
-                        onClick={() => handlePayment(camp)}
+                        // onClick={() => handlePayment(camp)}
                       >
                         Pay
                       </button>
@@ -128,7 +139,9 @@ const RegisteredCamps = () => {
             ))
           ) : (
             <tr>
-              <td colSpan="7" className="text-center">No camps found</td>
+              <td colSpan="7" className="text-center">
+                No camps found
+              </td>
             </tr>
           )}
         </tbody>

@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import PopularDataCards from "../../Components/PopularDataCards";
 
 const PopularCamp = ({ camps }) => {
@@ -9,6 +10,7 @@ const PopularCamp = ({ camps }) => {
           <PopularDataCards key={camp._id} camp={camp} />
         ))}
       </div>
+      <Link to="/availableCamps"><button className="btn w-full mb-4 bg-[#003285] text-white">See All Camps</button></Link>
     </div>
   );
 };

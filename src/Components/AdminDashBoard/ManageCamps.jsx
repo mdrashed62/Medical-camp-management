@@ -6,9 +6,8 @@ import { AuthContext } from "../../Providers/AuthProviders";
 const ManageCamps = () => {
   const { user } = useContext(AuthContext);
   const campsData = useLoaderData();
-  console.log(campsData)
   const [campData, setCampData] = useState([]);
-
+  
   useEffect(() => {
     if (campsData) {
       setCampData(campsData.filter((camp) => camp.organizerEmail === user?.email));
