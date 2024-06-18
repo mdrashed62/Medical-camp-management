@@ -1,67 +1,75 @@
 import { useContext, useState, useEffect } from "react";
-import { Link, useLoaderData } from "react-router-dom";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 import { AuthContext } from "../../Providers/AuthProviders";
 
 const RegisteredCamps = () => {
   const { user } = useContext(AuthContext);
-  const registeredCampsData = useLoaderData();
   const [campData, setCampData] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
-    if (registeredCampsData) {
-      setCampData(
-        registeredCampsData?.filter(
+    fetch("http://localhost:5000/registeredCamps")
+      .then((res) => res.json())
+      .then((data) => {
+        // Filter data based on logged-in user's email
+        const filteredData = data.filter(
           (camp) => camp.participantEmail === user?.email
-        )
-      );
+        );
+        setCampData(filteredData);
+      })
+      .catch((err) => console.error("Error fetching data:", err));
+  }, [user]);
+
+  const handleDelete = (id, paymentStatus, confirmationStatus) => {
+    // Check conditions to disable delete
+    if (paymentStatus === "Paid" && confirmationStatus === "Confirmed") {
+      Swal.fire({
+        title: "Cannot Cancel",
+        text: "Registration is already confirmed and paid.",
+        icon: "error",
+      });
+    } else {
+      Swal.fire({
+        title: "Are you sure?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonColor: "#3085d6",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "Yes, delete it!",
+      }).then((result) => {
+        if (result.isConfirmed) {
+          fetch(`http://localhost:5000/registeredCamps/${id}`, {
+            method: "DELETE",
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.deletedCount > 0) {
+                Swal.fire({
+                  title: "Deleted!",
+                  text: "Your camp has been deleted.",
+                  icon: "success",
+                });
+                // Update campData state to remove deleted camp
+                setCampData((prevCampData) =>
+                  prevCampData.filter((camp) => camp._id !== id)
+                );
+              }
+            })
+            .catch((err) => console.error("Error deleting camp:", err));
+        }
+      });
     }
-  }, [registeredCampsData, user]);
-
-  const handleDelete = (id) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You won't be able to revert this!",
-      icon: "warning",
-      showCancelButton: true,
-      confirmButtonColor: "#3085d6",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
-      if (result.isConfirmed) {
-        fetch(`http://localhost:5000/registeredCamps/${id}`, {
-          method: "DELETE",
-        })
-          .then((res) => res.json())
-          .then((data) => {
-            if (data.deletedCount > 0) {
-              Swal.fire({
-                title: "Deleted!",
-                text: "Your camp has been deleted.",
-                icon: "success",
-              });
-              setCampData((prevCampData) =>
-                prevCampData.filter((camp) => camp._id !== id)
-              );
-            }
-          });
-      }
-    });
   };
-
-  // const handlePaymentSuccess = (campId) => {
-  //   setCampData((prevCampData) =>
-  //     prevCampData.map((camp) =>
-  //       camp._id === campId ? { ...camp, paymentStatus: "Paid" } : camp
-  //     )
-  //   );
-  // };
 
   const handleSearch = (e) => {
     e.preventDefault();
     const term = e.target.search.value.toLowerCase();
     setSearchTerm(term);
+    setCurrentPage(1);
   };
 
   const filteredCamps = campData.filter(
@@ -70,9 +78,18 @@ const RegisteredCamps = () => {
       camp.healthcareProfessional.toLowerCase().includes(searchTerm)
   );
 
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentCamps = filteredCamps.slice(indexOfFirstItem, indexOfLastItem);
+  const totalPages = Math.ceil(filteredCamps.length / itemsPerPage);
+
+  const handleClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div>
-      <form onSubmit={handleSearch} className="flex">
+      <form onSubmit={handleSearch} className="flex mb-4">
         <input
           type="text"
           placeholder="Search for camp"
@@ -99,8 +116,8 @@ const RegisteredCamps = () => {
           </tr>
         </thead>
         <tbody>
-          {filteredCamps.length > 0 ? (
-            filteredCamps.map((camp) => (
+          {currentCamps.length > 0 ? (
+            currentCamps.map((camp) => (
               <tr key={camp._id}>
                 <td>{camp.campName}</td>
                 <td>{camp.fees} $</td>
@@ -112,20 +129,30 @@ const RegisteredCamps = () => {
                     </button>
                   ) : (
                     <Link to={`/dashboard/payment/${camp._id}`}>
-                      <button
-                        className="btn btn-sm"
-                        // onClick={() => handlePayment(camp)}
-                      >
-                        Pay
-                      </button>
+                      <button className="btn btn-sm">Pay</button>
                     </Link>
                   )}
                 </td>
                 <td>{camp.confirmationStatus}</td>
                 <td>
                   <button
-                    className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
-                    onClick={() => handleDelete(camp._id)}
+                    className={`btn ml-2 text-white bg-red-500 btn-ghost btn-xs ${
+                      camp.paymentStatus === "Paid" &&
+                      camp.confirmationStatus === "Confirmed"
+                        ? "opacity-50 cursor-not-allowed"
+                        : ""
+                    }`}
+                    onClick={() =>
+                      handleDelete(
+                        camp._id,
+                        camp.paymentStatus,
+                        camp.confirmationStatus
+                      )
+                    }
+                    disabled={
+                      camp.paymentStatus === "Paid" &&
+                      camp.confirmationStatus === "Confirmed"
+                    }
                   >
                     Cancel
                   </button>
@@ -146,6 +173,21 @@ const RegisteredCamps = () => {
           )}
         </tbody>
       </table>
+
+      {/* Pagination controls */}
+      {[...Array(totalPages)].map((_, index) => (
+        <button
+          key={index}
+          onClick={() => handleClick(index + 1)}
+          className={`px-4 py-2 mx-1 ${
+            index + 1 === currentPage
+              ? "bg-blue-500 text-white"
+              : "bg-gray-300"
+          } rounded`}
+        >
+          {index + 1}
+        </button>
+      ))}
     </div>
   );
 };

@@ -1,13 +1,12 @@
 
 import { useLoaderData, useParams } from "react-router-dom";
+import Modal2 from "../Components/Modal2";
 
-
-
-const AddedCampsDetails = () => {
-  const addedCampsData = useLoaderData();
+const AddedCampDetails = () => {
+  const addedData = useLoaderData();
   const { id } = useParams();
-  const addedCamp = addedCampsData.find((item) => item._id === id);
-  const { name, image, description, location, participantCount, dateTime, fees, healthcareProfessional } = addedCamp;
+  const added = addedData.find((item) => item._id === id);
+  const { name, image, description, location, participantCount, dateTime, fees, healthcareProfessional } = added;
 
   return (
     <div>
@@ -38,11 +37,12 @@ const AddedCampsDetails = () => {
           </div>
         </div>
         <div className="w-full">
-          <button className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]" onClick={() => document.getElementById('campRegistrationModal').showModal()}>Join Camp</button>
+          <button className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]" onClick={() => document.getElementById('modal2').showModal()}>Join Camp</button>
         </div>
       </div>
+      <Modal2 camp={added} />
     </div>
   );
 };
 
-export default AddedCampsDetails;
+export default AddedCampDetails;

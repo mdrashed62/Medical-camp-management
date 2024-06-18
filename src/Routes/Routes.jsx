@@ -19,9 +19,10 @@ import ManageCamps from "../Components/AdminDashBoard/ManageCamps";
 import ManageRegisteredCamps from "../Components/AdminDashBoard/ManageRegisteredCamps";
 import UpdateOrganizerProfile from "../Components/AdminDashBoard/UpdateOrganizerProfile";
 import UpdateCamps from "../Pages/UpdateCamps";
-import AddedCampsDetails from "../Pages/AddedCampsDetails";
 import Payment from "../Pages/Dashboard/Payment/Payment";
 import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfile";
+import Modal2 from "../Components/Modal2";
+import AddedCampDetails from "../Pages/AddedCampDetails";
 
 
 
@@ -40,7 +41,11 @@ import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfil
             element: <AvailableCamps></AvailableCamps>,
             loader: () => fetch('http://localhost:5000/addedCampsCount')
         },
-      
+        
+        {
+          path: "/modal2",
+          element: <Modal2></Modal2>
+        },
         {
             path: '/login',
             element: <Login></Login>
@@ -54,6 +59,11 @@ import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfil
             element: <PopularCampDetails></PopularCampDetails>,
             loader: () => fetch('http://localhost:5000/popularData')
         },
+        {
+          path: '/addedCampsDetails/:id',
+          element: <AddedCampDetails></AddedCampDetails>,
+          loader: () => fetch('http://localhost:5000/addedCamps')
+        }
       ]
     },
     {
@@ -71,7 +81,7 @@ import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfil
         {
           path: 'registeredCamps',
           element: <RegisteredCamps></RegisteredCamps>,
-          loader: () => fetch('http://localhost:5000/registeredCamps')
+          loader: () => fetch('http://localhost:5000/registeredCampsCount')
         },
         {
           path: 'paymentHistory',
@@ -114,11 +124,7 @@ import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfil
           element: <UpdateCamps></UpdateCamps>,
           loader: ({params}) => fetch(`http://localhost:5000/addedCamps/${params.id}`)
         },
-        { 
-            path: "addedCampsDetails/:id",
-            element: <AddedCampsDetails></AddedCampsDetails>,
-            loader: () => fetch('http://localhost:5000/addedCamps')
-        }
+       
       ]
     }
   ]);
