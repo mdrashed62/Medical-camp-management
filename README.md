@@ -1,4 +1,4 @@
-# React + Vite
+# Medical Camp Management
 
 Organizer Email: checkforadmin@gamil.com
 Organizer Pass: 123456
