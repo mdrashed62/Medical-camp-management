@@ -13,7 +13,9 @@ const ManageCamps = () => {
   useEffect(() => {
     const fetchCamps = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/addedCamps`);
+        const response = await fetch(
+          `https://medical-camp-management-server-a12.vercel.app/addedCamps`
+        );
         if (!response.ok) {
           throw new Error("Failed to fetch camps");
         }
@@ -42,7 +44,7 @@ const ManageCamps = () => {
   const indexOfLastCamp = currentPage * campsPerPage;
   const indexOfFirstCamp = indexOfLastCamp - campsPerPage;
   const currentCamps = campData.slice(indexOfFirstCamp, indexOfLastCamp);
-  console.log(currentCamps)
+  console.log(currentCamps);
 
   const handlePageClick = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -57,9 +59,12 @@ const ManageCamps = () => {
       confirmButtonText: "Yes, delete it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/addedCamps/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://medical-camp-management-server-a12.vercel.app/addedCamps/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error("Failed to delete camp");
@@ -130,26 +135,28 @@ const ManageCamps = () => {
         </thead>
         <tbody>
           {filteredCamps.length > 0 ? (
-            filteredCamps.slice(indexOfFirstCamp, indexOfLastCamp).map((camp) => (
-              <tr key={camp._id}>
-                <td>{camp.campName}</td>
-                <td>{camp.location}</td>
-                <td>{camp.dateTime}</td>
-                <td>
-                  <Link to={`/dashboard/updateCamps/${camp._id}`}>
-                    <button className="btn bg-[#071952] text-white btn-ghost btn-xs">
-                      Update
+            filteredCamps
+              .slice(indexOfFirstCamp, indexOfLastCamp)
+              .map((camp) => (
+                <tr key={camp._id}>
+                  <td>{camp.campName}</td>
+                  <td>{camp.location}</td>
+                  <td>{camp.dateTime}</td>
+                  <td>
+                    <Link to={`/dashboard/updateCamps/${camp._id}`}>
+                      <button className="btn bg-[#071952] text-white btn-ghost btn-xs">
+                        Update
+                      </button>
+                    </Link>
+                    <button
+                      className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
+                      onClick={() => handleDelete(camp._id)}
+                    >
+                      Delete
                     </button>
-                  </Link>
-                  <button
-                    className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
-                    onClick={() => handleDelete(camp._id)}
-                  >
-                    Delete
-                  </button>
-                </td>
-              </tr>
-            ))
+                  </td>
+                </tr>
+              ))
           ) : (
             <tr>
               <td colSpan="4" className="text-center">
@@ -163,19 +170,21 @@ const ManageCamps = () => {
       {/* Pagination Controls */}
       {filteredCamps.length > campsPerPage && (
         <div className="flex justify-center mt-4">
-          {Array.from({ length: Math.ceil(filteredCamps.length / campsPerPage) }).map(
-            (item, index) => (
-              <button
-                key={index}
-                onClick={() => handlePageClick(index + 1)}
-                className={`px-4 py-2 mx-1 ${
-                  index + 1 === currentPage ? "bg-blue-500 text-white" : "bg-gray-300"
-                } rounded`}
-              >
-                {index + 1}
-              </button>
-            )
-          )}
+          {Array.from({
+            length: Math.ceil(filteredCamps.length / campsPerPage),
+          }).map((item, index) => (
+            <button
+              key={index}
+              onClick={() => handlePageClick(index + 1)}
+              className={`px-4 py-2 mx-1 ${
+                index + 1 === currentPage
+                  ? "bg-blue-500 text-white"
+                  : "bg-gray-300"
+              } rounded`}
+            >
+              {index + 1}
+            </button>
+          ))}
         </div>
       )}
     </div>

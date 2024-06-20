@@ -11,7 +11,9 @@ const Payment = () => {
   const [camp, setCamp] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:5000/registeredCamps/${id}`)
+    fetch(
+      `https://medical-camp-management-server-a12.vercel.app/registeredCamps/${id}`
+    )
       .then((res) => res.json())
       .then((data) => setCamp(data));
   }, [id]);

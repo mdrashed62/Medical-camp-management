@@ -8,7 +8,7 @@ const AvailableCamps = () => {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch("http://localhost:5000/addedCamps")
+    fetch("https://medical-camp-management-server-a12.vercel.app/addedCamps")
       .then((res) => res.json())
       .then((data) => setAvailableCamps(data))
       .catch((error) => console.error("Error fetching camps:", error));
@@ -21,11 +21,20 @@ const AvailableCamps = () => {
   };
 
   // Ensure availableCamps is an array before filtering
-  const filteredCamps = availableCamps.length > 0 ? availableCamps.filter((camp) =>
-    (camp.name && camp.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (camp.dateTime && camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (camp.healthcareProfessional && camp.healthcareProfessional.toLowerCase().includes(searchTerm.toLowerCase()))
-  ) : [];
+  const filteredCamps =
+    availableCamps.length > 0
+      ? availableCamps.filter(
+          (camp) =>
+            (camp.name &&
+              camp.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (camp.dateTime &&
+              camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
+            (camp.healthcareProfessional &&
+              camp.healthcareProfessional
+                .toLowerCase()
+                .includes(searchTerm.toLowerCase()))
+        )
+      : [];
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -64,7 +73,9 @@ const AvailableCamps = () => {
             key={index}
             onClick={() => handleClick(index + 1)}
             className={`px-4 py-2 mx-1 ${
-              index + 1 === currentPage ? "bg-blue-500 text-white" : "bg-gray-300"
+              index + 1 === currentPage
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300"
             } rounded`}
           >
             {index + 1}

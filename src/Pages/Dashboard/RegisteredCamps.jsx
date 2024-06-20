@@ -11,7 +11,9 @@ const RegisteredCamps = () => {
   const itemsPerPage = 10;
 
   useEffect(() => {
-    fetch("http://localhost:5000/registeredCamps")
+    fetch(
+      "https://medical-camp-management-server-a12.vercel.app/registeredCamps"
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data && data.camps && Array.isArray(data.camps)) {
@@ -26,8 +28,6 @@ const RegisteredCamps = () => {
       })
       .catch((err) => console.error("Error fetching data:", err));
   }, [user]);
-  
-  
 
   const handleDelete = (id, paymentStatus, confirmationStatus) => {
     if (paymentStatus === "Paid" && confirmationStatus === "Confirmed") {
@@ -47,9 +47,12 @@ const RegisteredCamps = () => {
         confirmButtonText: "Yes, delete it!",
       }).then((result) => {
         if (result.isConfirmed) {
-          fetch(`http://localhost:5000/registeredCamps/${id}`, {
-            method: "DELETE",
-          })
+          fetch(
+            `https://medical-camp-management-server-a12.vercel.app/registeredCamps/${id}`,
+            {
+              method: "DELETE",
+            }
+          )
             .then((res) => res.json())
             .then((data) => {
               if (data.deletedCount > 0) {
@@ -78,18 +81,21 @@ const RegisteredCamps = () => {
       confirmButtonText: "Submit",
       showLoaderOnConfirm: true,
       preConfirm: (feedback) => {
-        return fetch("http://localhost:5000/feedback", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            campId: id,
-            feedback: feedback,
-            participantName: name,
-            campName: campsName
-          }),
-        })
+        return fetch(
+          "https://medical-camp-management-server-a12.vercel.app/feedback",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              campId: id,
+              feedback: feedback,
+              participantName: name,
+              campName: campsName,
+            }),
+          }
+        )
           .then((res) => {
             if (!res.ok) {
               throw new Error(res.statusText);
@@ -98,7 +104,7 @@ const RegisteredCamps = () => {
           })
           .then((data) => {
             Swal.fire("Feedback submitted!", "", "success");
-            console.log(data)
+            console.log(data);
           })
           .catch((error) => {
             Swal.fire("Error submitting feedback:", error.message, "error");
@@ -203,7 +209,13 @@ const RegisteredCamps = () => {
                 <td>
                   <button
                     className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
-                    onClick={() => handleFeedback(camp._id, camp.participantName, camp.campName)}
+                    onClick={() =>
+                      handleFeedback(
+                        camp._id,
+                        camp.participantName,
+                        camp.campName
+                      )
+                    }
                   >
                     Feedback
                   </button>

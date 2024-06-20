@@ -8,11 +8,11 @@ const Dashboard = () => {
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
-    fetch("http://localhost:5000/users")
+    fetch("https://medical-camp-management-server-a12.vercel.app/users")
       .then((res) => res.json())
       .then((data) => {
-        const currentUser = data?.find(u => u.email === user?.email);
-        setIsAdmin(currentUser?.role === 'admin');
+        const currentUser = data?.find((u) => u.email === user?.email);
+        setIsAdmin(currentUser?.role === "admin");
         setLoading(false);
       })
       .catch((error) => {

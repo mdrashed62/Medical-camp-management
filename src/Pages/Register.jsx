@@ -6,46 +6,50 @@ import SocialLogin from "../Components/SocialLogin";
 import { useForm } from "react-hook-form";
 
 const Register = () => {
-  const { register, handleSubmit, formState: { errors } } = useForm();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
   const [showPassword, setShowPassword] = useState(false);
 
   const { createUser, updateUserData, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
-  const from = '/';
+  const from = "/";
 
   const onSubmit = (data) => {
     const { name, email, photo, password } = data;
-    const role = 'user';
+    const role = "user";
 
     createUser(email, password)
-      .then(result => {
+      .then((result) => {
         const user = result.user;
-        console.log('Here the user', user);
+        console.log("Here the user", user);
         updateUserData(name, photo).then(() => {
           const newUser = { name, email, photo, role };
-          fetch('http://localhost:5000/users', {
-            method: 'POST',
+          fetch("https://medical-camp-management-server-a12.vercel.app/users", {
+            method: "POST",
             headers: {
-              'Content-Type': 'application/json'
+              "Content-Type": "application/json",
             },
-            body: JSON.stringify(newUser)
+            body: JSON.stringify(newUser),
           })
-            .then(res => res.json())
-            .then(data => {
+            .then((res) => res.json())
+            .then((data) => {
               console.log(data);
               setUser((prevUser) => ({
                 ...prevUser,
                 displayName: name,
-                photoURL: photo
+                photoURL: photo,
               }));
               navigate(from);
             })
-            .catch(error => {
+            .catch((error) => {
               console.error("Error during user data update:", error);
             });
         });
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error during registration:", error);
       });
   };
@@ -57,36 +61,78 @@ const Register = () => {
           <label className="label">
             <span className="label-text">Name</span>
           </label>
-          <input type="text" {...register("name", { required: true })} name="name" placeholder="Name" className="input input-bordered" required />
-          {errors.name && <span className="text-red-500">Name is required</span>}
+          <input
+            type="text"
+            {...register("name", { required: true })}
+            name="name"
+            placeholder="Name"
+            className="input input-bordered"
+            required
+          />
+          {errors.name && (
+            <span className="text-red-500">Name is required</span>
+          )}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Email</span>
           </label>
-          <input type="email" {...register("email", { required: true })} name="email" placeholder="Email" className="input input-bordered" required />
-          {errors.email && <span className="text-red-500">Email is required</span>}
+          <input
+            type="email"
+            {...register("email", { required: true })}
+            name="email"
+            placeholder="Email"
+            className="input input-bordered"
+            required
+          />
+          {errors.email && (
+            <span className="text-red-500">Email is required</span>
+          )}
         </div>
         <div className="form-control">
           <label className="label">
             <span className="label-text">Photo Url</span>
           </label>
-          <input type="text" {...register("photo")} name="photo" placeholder="Photo URL" className="input input-bordered" required />
+          <input
+            type="text"
+            {...register("photo")}
+            name="photo"
+            placeholder="Photo URL"
+            className="input input-bordered"
+            required
+          />
         </div>
         <div className="relative">
           <div className="form-control">
             <label className="label">
               <span className="label-text">Password</span>
             </label>
-            <input type={showPassword ? 'text' : 'password'} {...register("password", { required: true })} name="password" placeholder="Password" className="input input-bordered" required />
-            <span className="absolute top-[53px] right-3 cursor-pointer" onClick={() => setShowPassword(!showPassword)}>
+            <input
+              type={showPassword ? "text" : "password"}
+              {...register("password", { required: true })}
+              name="password"
+              placeholder="Password"
+              className="input input-bordered"
+              required
+            />
+            <span
+              className="absolute top-[53px] right-3 cursor-pointer"
+              onClick={() => setShowPassword(!showPassword)}
+            >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
             </span>
           </div>
         </div>
         <div className="form-control mt-6">
-          <button type="submit" className="btn w-full btn-primary">Register</button>
-          <p className="text-center">Already have an account? Please <span className="text-red-500 font-bold"><Link to='/login'>Login</Link></span></p>
+          <button type="submit" className="btn w-full btn-primary">
+            Register
+          </button>
+          <p className="text-center">
+            Already have an account? Please{" "}
+            <span className="text-red-500 font-bold">
+              <Link to="/login">Login</Link>
+            </span>
+          </p>
         </div>
       </form>
       <SocialLogin /> {/* Optional: Include Social Login component if needed */}

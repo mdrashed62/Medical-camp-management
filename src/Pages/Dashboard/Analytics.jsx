@@ -1,7 +1,15 @@
-import { BarChart, Bar, XAxis, YAxis, Tooltip, Legend, CartesianGrid } from 'recharts';
-import { useContext, useEffect, useState } from 'react';
-import axios from 'axios';
-import { AuthContext } from '../../Providers/AuthProviders';
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  Tooltip,
+  Legend,
+  CartesianGrid,
+} from "recharts";
+import { useContext, useEffect, useState } from "react";
+import axios from "axios";
+import { AuthContext } from "../../Providers/AuthProviders";
 
 const Analytics = () => {
   const { user } = useContext(AuthContext);
@@ -10,10 +18,12 @@ const Analytics = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:5000/registeredCamps/user/${user.email}`);
+        const response = await axios.get(
+          `https://medical-camp-management-server-a12.vercel.app/registeredCamps/user/${user.email}`
+        );
         setCampData(response.data);
       } catch (error) {
-        console.error('Error fetching camp data:', error);
+        console.error("Error fetching camp data:", error);
       }
     };
 
@@ -25,7 +35,12 @@ const Analytics = () => {
   return (
     <div>
       <h1>Participants Lifetime Registered Camps</h1>
-      <BarChart width={800} height={400} data={campData} style={{ background: '#f0f0f0' }}>
+      <BarChart
+        width={800}
+        height={400}
+        data={campData}
+        style={{ background: "#f0f0f0" }}
+      >
         <CartesianGrid strokeDasharray="3 3" />
         <XAxis dataKey="campName" />
         <YAxis />

@@ -4,15 +4,15 @@ import PopularCamp from "./PopularCamp";
 import axios from "axios";
 import Feedbacks from "../../Components/Feedbacks";
 
-
-
 const Home = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [camps, setCamps] = useState([]);
 
   useEffect(() => {
     const getCampsData = async () => {
-      const response = await axios.get("http://localhost:5000/popularData");
+      const response = await axios.get(
+        "https://medical-camp-management-server-a12.vercel.app/popularData"
+      );
       setCamps(response.data);
     };
     getCampsData();
@@ -23,15 +23,17 @@ const Home = () => {
     setSearchTerm(e.target.search.value);
   };
 
-  const filteredCamps = camps.filter((camp) =>
-    camp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    camp.healthcareProfessional.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredCamps = camps.filter(
+    (camp) =>
+      camp.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      camp.healthcareProfessional
+        .toLowerCase()
+        .includes(searchTerm.toLowerCase())
   );
 
   return (
     <div>
-      
       <form onSubmit={handleSearch} className="flex">
         <input
           type="text"

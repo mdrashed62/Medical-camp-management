@@ -12,7 +12,9 @@ const ManageRegisteredCamps = () => {
   useEffect(() => {
     const fetchRegisteredCamps = async () => {
       try {
-        const response = await fetch(`http://localhost:5000/registeredCamps?page=${currentPage}&limit=${itemsPerPage}`);
+        const response = await fetch(
+          `https://medical-camp-management-server-a12.vercel.app/registeredCamps?page=${currentPage}&limit=${itemsPerPage}`
+        );
         const data = await response.json();
         setRegisteredCamps(data.camps);
         setTotalPages(data.totalPages);
@@ -24,15 +26,20 @@ const ManageRegisteredCamps = () => {
   }, [currentPage]);
 
   const handleConfirm = (id) => {
-    fetch(`http://localhost:5000/confirmRegistration/${id}`, {
-      method: "PATCH",
-    })
+    fetch(
+      `https://medical-camp-management-server-a12.vercel.app/confirmRegistration/${id}`,
+      {
+        method: "PATCH",
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         if (data.modifiedCount > 0) {
           setRegisteredCamps((prevCamps) =>
             prevCamps.map((camp) =>
-              camp._id === id ? { ...camp, confirmationStatus: "Confirmed" } : camp
+              camp._id === id
+                ? { ...camp, confirmationStatus: "Confirmed" }
+                : camp
             )
           );
           Swal.fire("Success", "Registration Confirmed!", "success");
@@ -51,16 +58,23 @@ const ManageRegisteredCamps = () => {
       confirmButtonText: "Yes, cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        fetch(`http://localhost:5000/cancelRegistration/${id}`, {
-          method: "DELETE",
-        })
+        fetch(
+          `https://medical-camp-management-server-a12.vercel.app/cancelRegistration/${id}`,
+          {
+            method: "DELETE",
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.deletedCount > 0) {
               setRegisteredCamps((prevCamps) =>
                 prevCamps.filter((camp) => camp._id !== id)
               );
-              Swal.fire("Cancelled!", "Your registration has been cancelled.", "success");
+              Swal.fire(
+                "Cancelled!",
+                "Your registration has been cancelled.",
+                "success"
+              );
             }
           });
       }
@@ -122,7 +136,9 @@ const ManageRegisteredCamps = () => {
               <td>{camp.paymentStatus}</td>
               <td>
                 {camp.confirmationStatus === "Pending" ? (
-                  <button onClick={() => handleConfirm(camp._id)}>Pending</button>
+                  <button onClick={() => handleConfirm(camp._id)}>
+                    Pending
+                  </button>
                 ) : (
                   "Confirmed"
                 )}
@@ -130,9 +146,13 @@ const ManageRegisteredCamps = () => {
               <td>
                 <button
                   onClick={() => handleCancel(camp._id)}
-                  disabled={camp.paymentStatus === "Paid" && camp.confirmationStatus === "Confirmed"}
+                  disabled={
+                    camp.paymentStatus === "Paid" &&
+                    camp.confirmationStatus === "Confirmed"
+                  }
                 >
-                  {camp.paymentStatus === "Paid" && camp.confirmationStatus === "Confirmed" ? (
+                  {camp.paymentStatus === "Paid" &&
+                  camp.confirmationStatus === "Confirmed" ? (
                     <FaBan />
                   ) : (
                     "Cancel"
@@ -150,7 +170,11 @@ const ManageRegisteredCamps = () => {
           <button
             key={index}
             onClick={() => handlePageClick(index + 1)}
-            className={`px-4 py-2 mx-1 ${index + 1 === currentPage ? "bg-blue-500 text-white" : "bg-gray-300"} rounded`}
+            className={`px-4 py-2 mx-1 ${
+              index + 1 === currentPage
+                ? "bg-blue-500 text-white"
+                : "bg-gray-300"
+            } rounded`}
           >
             {index + 1}
           </button>

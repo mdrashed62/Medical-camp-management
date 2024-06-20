@@ -115,7 +115,7 @@ const Navbar = () => {
               <li className="mt-4">
                 <button
                   onClick={handleSignOut}
-                  className="btn bg-gradient-to-r from-purple-500 to-pink-500 text-white"
+                  className="btn bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
                 >
                   Logout
                 </button>

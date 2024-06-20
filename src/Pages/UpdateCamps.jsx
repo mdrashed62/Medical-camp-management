@@ -53,13 +53,16 @@ const UpdateCamps = () => {
 
     console.log(updateCamp);
 
-    fetch(`http://localhost:5000/addedCamps/${_id}`, {
-      method: "PUT",
-      headers: {
-        "content-type": "application/json",
-      },
-      body: JSON.stringify(updateCamp),
-    })
+    fetch(
+      `https://medical-camp-management-server-a12.vercel.app/addedCamps/${_id}`,
+      {
+        method: "PUT",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify(updateCamp),
+      }
+    )
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
@@ -80,7 +83,7 @@ const UpdateCamps = () => {
     const month = String(date.getMonth() + 1).padStart(2, "0");
     const day = String(date.getDate()).padStart(2, "0");
     const year = date.getFullYear();
-    return `${year}-${month}-${day}`; 
+    return `${year}-${month}-${day}`;
   };
 
   const formattedDate = dateTime ? formatDate(dateTime) : "";
