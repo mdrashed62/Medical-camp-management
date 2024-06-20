@@ -4,7 +4,7 @@ import { AuthContext } from "../Providers/AuthProviders";
 
 const Dashboard = () => {
   const { user } = useContext(AuthContext);
-  const [loading, setLoading] = useState()
+  const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
 
   useEffect(() => {
@@ -13,19 +13,22 @@ const Dashboard = () => {
       .then((data) => {
         const currentUser = data?.find(u => u.email === user?.email);
         setIsAdmin(currentUser?.role === 'admin');
-       setLoading(false)
+        setLoading(false);
       })
-      .catch((error) => console.error("Error fetching users:", error));
-      setLoading(false)
+      .catch((error) => {
+        console.error("Error fetching users:", error);
+        setLoading(false);
+      });
   }, [user]);
+
   if (loading) {
     return <div>Loading...</div>;
   }
 
   return (
-    <div className="flex mt-4">
-      <div className="w-64 min-h-screen rounded-md bg-orange-400">
-        <ul className="menu">
+    <div className="flex flex-col lg:flex-row mt-4">
+      <div className="w-full lg:w-64 min-h-screen rounded-md bg-orange-400">
+        <ul className="menu p-4">
           {isAdmin ? (
             <>
               <li>
@@ -73,7 +76,7 @@ const Dashboard = () => {
           </li>
         </ul>
       </div>
-      <div className="flex-1">
+      <div className="flex-1 p-4">
         <Outlet />
       </div>
     </div>

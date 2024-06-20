@@ -6,6 +6,7 @@ const ManageRegisteredCamps = () => {
   const [registeredCamps, setRegisteredCamps] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
   const itemsPerPage = 10; // Define items per page
 
   useEffect(() => {
@@ -70,8 +71,37 @@ const ManageRegisteredCamps = () => {
     setCurrentPage(pageNumber);
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const term = e.target.search.value.toLowerCase();
+    setSearchTerm(term);
+    setCurrentPage(1); // Reset to first page on new search
+  };
+
+  const filteredCamps = registeredCamps.filter(
+    (camp) =>
+      camp.campName.toLowerCase().includes(searchTerm) ||
+      camp.participantName.toLowerCase().includes(searchTerm) ||
+      camp.paymentStatus.toLowerCase().includes(searchTerm)
+  );
+
   return (
-    <div className="">
+    <div>
+      <form onSubmit={handleSearch} className="flex mb-4">
+        <input
+          type="text"
+          placeholder="Search for camp"
+          name="search"
+          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+        />
+        <button
+          type="submit"
+          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+        >
+          Search
+        </button>
+      </form>
+
       <table className="table">
         <thead>
           <tr>
@@ -84,7 +114,7 @@ const ManageRegisteredCamps = () => {
           </tr>
         </thead>
         <tbody>
-          {registeredCamps.map((camp) => (
+          {filteredCamps.map((camp) => (
             <tr key={camp._id}>
               <td>{camp.campName}</td>
               <td>{camp.fees}</td>
