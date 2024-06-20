@@ -1,7 +1,8 @@
 import { Link } from "react-router-dom";
 
 const AvailableCampsCards = ({ camp }) => {
-  const {_id, name, image, dateTime, location, healthcareProfessionalName, participantCount, description } = camp;
+  const {_id, campName, image, dateTime, location, healthcareProfessional, participantCount, description } = camp;
+  console.log(camp, 'frrooewr')
   return (
     <div className="mb-4">
       <div className="card  bg-base-100 shadow-xl">
@@ -10,18 +11,16 @@ const AvailableCampsCards = ({ camp }) => {
         </figure>
         <div className="card-body items-center text-center">
           <div>
-            <h2>{name}</h2>
+            <h2 className="text-xl font-semibold">{campName}</h2>
             <p className="font-bold">Participant: {participantCount}</p>
           </div>
-          <p>{location}</p>
           <div className="flex justify-between gap-6">
             <h2>Date And Time: {dateTime}$</h2>
           </div>
           <p>Location: {location}</p>
           <p>description: {description}</p>
 
-          <p className="font-semibold">{healthcareProfessionalName}</p>
-
+          <p className="font-semibold">{healthcareProfessional}</p>
           <div className="w-full ">
             <Link to={`/addedCampsDetails/${_id}`}>
               {" "}

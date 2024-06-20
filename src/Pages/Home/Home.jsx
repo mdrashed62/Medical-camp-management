@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import Banner from "./Banner/Banner";
 import PopularCamp from "./PopularCamp";
 import axios from "axios";
+import Feedbacks from "../../Components/Feedbacks";
+
 
 
 const Home = () => {
@@ -29,6 +31,7 @@ const Home = () => {
 
   return (
     <div>
+      
       <form onSubmit={handleSearch} className="flex">
         <input
           type="text"
@@ -38,13 +41,14 @@ const Home = () => {
         />
         <button
           type="submit"
-          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-teal-500"
         >
           Search
         </button>
       </form>
       <Banner />
       <PopularCamp camps={filteredCamps} />
+      <Feedbacks></Feedbacks>
     </div>
   );
 };

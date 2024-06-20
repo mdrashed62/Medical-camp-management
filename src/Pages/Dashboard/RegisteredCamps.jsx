@@ -14,17 +14,22 @@ const RegisteredCamps = () => {
     fetch("http://localhost:5000/registeredCamps")
       .then((res) => res.json())
       .then((data) => {
-        // Filter data based on logged-in user's email
-        const filteredData = data.filter(
-          (camp) => camp.participantEmail === user?.email
-        );
-        setCampData(filteredData);
+        if (data && data.camps && Array.isArray(data.camps)) {
+          // Filter data based on logged-in user's email
+          const filteredData = data.camps.filter(
+            (camp) => camp.participantEmail === user?.email
+          );
+          setCampData(filteredData);
+        } else {
+          console.error("Unexpected data format:", data);
+        }
       })
       .catch((err) => console.error("Error fetching data:", err));
   }, [user]);
+  
+  
 
   const handleDelete = (id, paymentStatus, confirmationStatus) => {
-    // Check conditions to disable delete
     if (paymentStatus === "Paid" && confirmationStatus === "Confirmed") {
       Swal.fire({
         title: "Cannot Cancel",
@@ -53,7 +58,6 @@ const RegisteredCamps = () => {
                   text: "Your camp has been deleted.",
                   icon: "success",
                 });
-                // Update campData state to remove deleted camp
                 setCampData((prevCampData) =>
                   prevCampData.filter((camp) => camp._id !== id)
                 );
@@ -63,6 +67,45 @@ const RegisteredCamps = () => {
         }
       });
     }
+  };
+
+  const handleFeedback = (id, name, campsName) => {
+    Swal.fire({
+      title: "Feedback",
+      input: "textarea",
+      inputPlaceholder: "Write your feedback here...",
+      showCancelButton: true,
+      confirmButtonText: "Submit",
+      showLoaderOnConfirm: true,
+      preConfirm: (feedback) => {
+        return fetch("http://localhost:5000/feedback", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            campId: id,
+            feedback: feedback,
+            participantName: name,
+            campName: campsName
+          }),
+        })
+          .then((res) => {
+            if (!res.ok) {
+              throw new Error(res.statusText);
+            }
+            return res.json();
+          })
+          .then((data) => {
+            Swal.fire("Feedback submitted!", "", "success");
+            console.log(data)
+          })
+          .catch((error) => {
+            Swal.fire("Error submitting feedback:", error.message, "error");
+          });
+      },
+      allowOutsideClick: () => !Swal.isLoading(),
+    });
   };
 
   const handleSearch = (e) => {
@@ -158,7 +201,10 @@ const RegisteredCamps = () => {
                   </button>
                 </td>
                 <td>
-                  <button className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs">
+                  <button
+                    className="btn ml-2 text-white bg-red-500 btn-ghost btn-xs"
+                    onClick={() => handleFeedback(camp._id, camp.participantName, camp.campName)}
+                  >
                     Feedback
                   </button>
                 </td>
@@ -180,9 +226,7 @@ const RegisteredCamps = () => {
           key={index}
           onClick={() => handleClick(index + 1)}
           className={`px-4 py-2 mx-1 ${
-            index + 1 === currentPage
-              ? "bg-blue-500 text-white"
-              : "bg-gray-300"
+            index + 1 === currentPage ? "bg-blue-500 text-white" : "bg-gray-300"
           } rounded`}
         >
           {index + 1}

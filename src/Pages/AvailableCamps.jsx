@@ -10,7 +10,8 @@ const AvailableCamps = () => {
   useEffect(() => {
     fetch("http://localhost:5000/addedCamps")
       .then((res) => res.json())
-      .then((data) => setAvailableCamps(data));
+      .then((data) => setAvailableCamps(data))
+      .catch((error) => console.error("Error fetching camps:", error));
   }, []);
 
   const handleSearch = (e) => {
@@ -19,11 +20,12 @@ const AvailableCamps = () => {
     setCurrentPage(1);
   };
 
-  const filteredCamps = availableCamps.filter((camp) =>
+  // Ensure availableCamps is an array before filtering
+  const filteredCamps = availableCamps.length > 0 ? availableCamps.filter((camp) =>
     (camp.name && camp.name.toLowerCase().includes(searchTerm.toLowerCase())) ||
     (camp.dateTime && camp.dateTime.toLowerCase().includes(searchTerm.toLowerCase())) ||
-    (camp.healthcareProfessional && camp.healthcareProfessionalName.toLowerCase().includes(searchTerm.toLowerCase()))
-  );
+    (camp.healthcareProfessional && camp.healthcareProfessional.toLowerCase().includes(searchTerm.toLowerCase()))
+  ) : [];
 
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -46,7 +48,7 @@ const AvailableCamps = () => {
         />
         <button
           type="submit"
-          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-[#003285]"
         >
           Search
         </button>

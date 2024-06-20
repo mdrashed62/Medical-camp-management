@@ -76,6 +76,8 @@ const CheckOutFormPayment = ({ fees, campId, campName, onPaymentSuccess }) => {
           date: new Date(),
           campId: campId,
           campName: campName,
+          paymentStatus: 'Paid',
+          confirmationStatus: 'Confirmed'
         };
 
         axiosSecure.post("/payments", payment).then((res) => {

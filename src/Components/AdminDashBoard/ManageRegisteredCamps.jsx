@@ -4,15 +4,25 @@ import { FaBan } from "react-icons/fa";
 
 const ManageRegisteredCamps = () => {
   const [registeredCamps, setRegisteredCamps] = useState([]);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(1);
+  const itemsPerPage = 10; // Define items per page
 
   useEffect(() => {
-    fetch("http://localhost:5000/registeredCamps")
-      .then((res) => res.json())
-      .then((data) => setRegisteredCamps(data));
-  }, []);
+    const fetchRegisteredCamps = async () => {
+      try {
+        const response = await fetch(`http://localhost:5000/registeredCamps?page=${currentPage}&limit=${itemsPerPage}`);
+        const data = await response.json();
+        setRegisteredCamps(data.camps);
+        setTotalPages(data.totalPages);
+      } catch (error) {
+        console.error("Error fetching registered camps:", error);
+      }
+    };
+    fetchRegisteredCamps();
+  }, [currentPage]);
 
   const handleConfirm = (id) => {
-    // Confirm the registration
     fetch(`http://localhost:5000/confirmRegistration/${id}`, {
       method: "PATCH",
     })
@@ -30,7 +40,6 @@ const ManageRegisteredCamps = () => {
   };
 
   const handleCancel = (id) => {
-    // Cancel the registration
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -55,6 +64,10 @@ const ManageRegisteredCamps = () => {
           });
       }
     });
+  };
+
+  const handlePageClick = (pageNumber) => {
+    setCurrentPage(pageNumber);
   };
 
   return (
@@ -85,7 +98,7 @@ const ManageRegisteredCamps = () => {
                 )}
               </td>
               <td>
-              <button
+                <button
                   onClick={() => handleCancel(camp._id)}
                   disabled={camp.paymentStatus === "Paid" && camp.confirmationStatus === "Confirmed"}
                 >
@@ -100,6 +113,19 @@ const ManageRegisteredCamps = () => {
           ))}
         </tbody>
       </table>
+
+      {/* Pagination controls */}
+      <div className="pagination">
+        {[...Array(totalPages)].map((_, index) => (
+          <button
+            key={index}
+            onClick={() => handlePageClick(index + 1)}
+            className={`px-4 py-2 mx-1 ${index + 1 === currentPage ? "bg-blue-500 text-white" : "bg-gray-300"} rounded`}
+          >
+            {index + 1}
+          </button>
+        ))}
+      </div>
     </div>
   );
 };

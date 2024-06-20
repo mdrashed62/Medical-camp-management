@@ -23,6 +23,7 @@ import Payment from "../Pages/Dashboard/Payment/Payment";
 import UpdateParticipantProfile from "../Pages/Dashboard/UpdateParticipantProfile";
 import Modal2 from "../Components/Modal2";
 import AddedCampDetails from "../Pages/AddedCampDetails";
+import Feedbacks from "../Components/Feedbacks";
 
 
 
@@ -35,6 +36,10 @@ import AddedCampDetails from "../Pages/AddedCampDetails";
         {
             path: '/',
             element: <Home></Home>,
+        },
+        {
+          path: '/feedback',
+          element: <Feedbacks></Feedbacks>
         },
         {
             path: '/availableCamps',
@@ -107,9 +112,8 @@ import AddedCampDetails from "../Pages/AddedCampDetails";
         },
         {
           path: 'manageCamps',
-          element: <ManageCamps></ManageCamps>,
-          loader: () => fetch('http://localhost:5000/addedCamps')
-        },
+          element: <ManageCamps />,
+        },        
         {
           path: 'manageRegisteredCamps',
           element: <ManageRegisteredCamps></ManageRegisteredCamps>
