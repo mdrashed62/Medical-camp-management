@@ -8,6 +8,7 @@ const ManageCamps = () => {
   const [campData, setCampData] = useState([]);
   const [currentPage, setCurrentPage] = useState(1); // State to track current page
   const [campsPerPage] = useState(10); // Number of camps per page
+  const [searchTerm, setSearchTerm] = useState(""); // State for search term
 
   useEffect(() => {
     const fetchCamps = async () => {
@@ -41,6 +42,7 @@ const ManageCamps = () => {
   const indexOfLastCamp = currentPage * campsPerPage;
   const indexOfFirstCamp = indexOfLastCamp - campsPerPage;
   const currentCamps = campData.slice(indexOfFirstCamp, indexOfLastCamp);
+  console.log(currentCamps)
 
   const handlePageClick = (pageNumber) => setCurrentPage(pageNumber);
 
@@ -86,8 +88,37 @@ const ManageCamps = () => {
     });
   };
 
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const term = e.target.search.value.toLowerCase();
+    setSearchTerm(term);
+    setCurrentPage(1);
+  };
+
+  const filteredCamps = campData.filter(
+    (camp) =>
+      camp.campName.toLowerCase().includes(searchTerm) ||
+      camp.location.toLowerCase().includes(searchTerm) ||
+      camp.dateTime.toLowerCase().includes(searchTerm)
+  );
+
   return (
     <div>
+      <form onSubmit={handleSearch} className="flex mb-4">
+        <input
+          type="text"
+          placeholder="Search for camp"
+          name="search"
+          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+        />
+        <button
+          type="submit"
+          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+        >
+          Search
+        </button>
+      </form>
+
       <table className="table">
         <thead>
           <tr>
@@ -98,8 +129,8 @@ const ManageCamps = () => {
           </tr>
         </thead>
         <tbody>
-          {currentCamps.length > 0 ? (
-            currentCamps.map((camp) => (
+          {filteredCamps.length > 0 ? (
+            filteredCamps.slice(indexOfFirstCamp, indexOfLastCamp).map((camp) => (
               <tr key={camp._id}>
                 <td>{camp.campName}</td>
                 <td>{camp.location}</td>
@@ -130,9 +161,9 @@ const ManageCamps = () => {
       </table>
 
       {/* Pagination Controls */}
-      {campData.length > campsPerPage && (
+      {filteredCamps.length > campsPerPage && (
         <div className="flex justify-center mt-4">
-          {Array.from({ length: Math.ceil(campData.length / campsPerPage) }).map(
+          {Array.from({ length: Math.ceil(filteredCamps.length / campsPerPage) }).map(
             (item, index) => (
               <button
                 key={index}
