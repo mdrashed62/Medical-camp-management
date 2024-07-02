@@ -1,8 +1,4 @@
 # Medical Camp Management
-
-Organizer Email: checkforadmin@gamil.com
-Organizer Pass: 123456
-
 # Live site URL:  
 (https://medical-camp-management-ada50.web.app)
 
