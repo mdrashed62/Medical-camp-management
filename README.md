@@ -13,7 +13,7 @@ form, Rest API
 
 3) Admin Dashboard: A robust admin dashboard that allows administrators to manage the website, including camp details, user information, and overall site content.
 # Project Clone and Local Run Instructions
-1) Clone the repository: git clone https://github.com/username/medical-camp-management.git
+1) Clone the repository: [git clone https://github.com/username/medical-camp-management.git](https://github.com/mdrashed62/Medical-camp-management.git)](https://github.com/mdrashed62/Medical-camp-management.git)
 2) Navigate to the project directory: cd medical-camp-management
 3) Install dependencies: npm install
 4) Set up environment variables: Create a .env file in the root directory.
