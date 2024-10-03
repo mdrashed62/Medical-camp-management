@@ -62,7 +62,7 @@ const AvailableCamps = () => {
           Search
         </button>
       </form>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-4 lg:mt-8">
         {currentCamps.map((camp) => (
           <AvailableCampsCards key={camp._id} camp={camp}></AvailableCampsCards>
         ))}

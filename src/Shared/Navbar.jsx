@@ -2,6 +2,7 @@ import { useContext, useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
 import mediLogo from "../assets/mediLogo.avif";
+import { FaArrowRight } from "react-icons/fa";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(() => {
@@ -84,22 +85,25 @@ const Navbar = () => {
       <div className="navbar-end flex items-center">
         <label
           onClick={handleTheme}
-          className="flex cursor-pointer ml-6 mr-4 gap-2"
+          className="flex cursor-pointer mr-8 gap-2 "
         >
           <input type="checkbox" className="toggle theme-controller" />
         </label>
         {user ? (
           <div className="dropdown z-50 dropdown-bottom dropdown-hover  dropdown-end">
-            <div
-              tabIndex={0}
-              role="button"
-              className="flex items-center cursor-pointer"
-            >
-              <img
-                src={user?.photoURL}
-                className="w-12 h-12 rounded-full"
-                alt="User Profile"
-              />
+            <div className="flex gap-2 items-center">
+              <p className="text-xl text-[#3B82F6]"><FaArrowRight/></p>
+              <div
+                tabIndex={0}
+                role="button"
+                className="flex items-center cursor-pointer"
+              >
+                <img
+                  src={user?.photoURL}
+                  className="w-12 h-12 rounded-full"
+                  alt="User Profile"
+                />
+              </div>
             </div>
             <ul
               tabIndex={0}

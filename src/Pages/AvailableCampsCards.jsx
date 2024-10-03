@@ -4,7 +4,7 @@ const AvailableCampsCards = ({ camp }) => {
   const {_id, campName, image, dateTime, location, healthcareProfessional, participantCount, description } = camp;
   console.log(camp, 'frrooewr')
   return (
-    <div className="transform transition-transform duration-300 hover:scale-105 mt-4 lg:mt-10">
+    <div className="transform transition-transform duration-300 hover:scale-10">
       <div className="card  bg-[#EAF0FF] shadow-xl h-full flex flex-col justify-between">
         <figure className="p-4">
           <img src={image} className="rounded-xl h-40"/>
