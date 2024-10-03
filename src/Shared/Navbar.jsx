@@ -1,7 +1,7 @@
 import { useContext, useState, useEffect } from "react";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../Providers/AuthProviders";
-import mediLogo from "../assets/mediLogo.jpg";
+import mediLogo from "../assets/mediLogo.avif";
 
 const Navbar = () => {
   const [theme, setTheme] = useState(() => {
@@ -38,11 +38,6 @@ const Navbar = () => {
       <li className="ml-4 mr-4">
         <NavLink to="/availableCamps">Available Camps</NavLink>
       </li>
-      {/* {user && (
-         <li className="ml-4 mr-4">
-         <NavLink to="/joinUs">Join US</NavLink>
-       </li>
-     )} */}
     </>
   );
 
@@ -68,17 +63,17 @@ const Navbar = () => {
           </div>
           <ul
             tabIndex={0}
-            className="dropdown-content z-50 menu menu-sm mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+            className="dropdown-content z-50 menu menu-sm mt-3 p-4 shadow bg-base-100 space-y-3 rounded w-52"
           >
             {navLinks}
           </ul>
         </div>
 
-        <div className="flex items-center text-xl md:text-2xl lg:text-3xl rounded-lg font-semibold">
+        <div className="flex items-center text-[10px] md:text-2xl lg:text-3xl rounded font-semibold">
           <div className="w-12 h-12">
-            <img className="rounded-lg" src={mediLogo} alt="Logo" />
+            <img className="rounded" src={mediLogo} alt="Logo" />
           </div>
-          <p className="text-[#071952] ml-2 font-bold">Medi Camp 360</p>
+          <p className="text-blue-500 lg: ml-2 font-bold">Medi Camp 360</p>
         </div>
       </div>
 
@@ -94,7 +89,7 @@ const Navbar = () => {
           <input type="checkbox" className="toggle theme-controller" />
         </label>
         {user ? (
-          <div className="dropdown z-50 dropdown-bottom dropdown-hover dropdown-end">
+          <div className="dropdown z-50 dropdown-bottom dropdown-hover  dropdown-end">
             <div
               tabIndex={0}
               role="button"
@@ -108,14 +103,16 @@ const Navbar = () => {
             </div>
             <ul
               tabIndex={0}
-              className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+              className="dropdown-content bg-[#EAF0FF] z-[1] menu shadow  rounded p-4 w-52"
             >
-              <li>{user?.displayName}</li>
-             <li><Link to='/dashboard/analytics'>Dashboard</Link></li>
+              <li className="py-2 font-semibold">{user?.displayName}</li>
+              <li className="bg-blue-400 rounded text-white hover:bg-black">
+                <Link to="/dashboard/analytics">Dashboard</Link>
+              </li>
               <li className="mt-4">
                 <button
                   onClick={handleSignOut}
-                  className="btn bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
+                  className="py-[6px] rounded bg-gradient-to-r from-sky-500 to-indigo-500 text-white"
                 >
                   Logout
                 </button>
@@ -126,7 +123,7 @@ const Navbar = () => {
         ) : (
           <Link
             to="/login"
-            className=" px-4 py-2 rounded-lg bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold"
+            className=" px-4 lg:px-8 py-2 rounded-full hover:bg-gradient-to-r hover:from-cyan-600 hover:to-blue-600 bg-gradient-to-r from-cyan-500 to-blue-500 text-white font-bold"
           >
             Join US
           </Link>

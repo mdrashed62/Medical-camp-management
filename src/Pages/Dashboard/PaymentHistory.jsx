@@ -54,7 +54,7 @@ const PaymentHistory = () => {
 
     return (
         <div>
-            <h2 className="text-center font-bold text-3xl text-lime-600 mb-6">Your Payment History</h2>
+            <h2 className="text-center font-bold text-3xl text-blue-500 mb-6">Your Payment History</h2>
             <table className="table">
                 <thead>
                     <tr>

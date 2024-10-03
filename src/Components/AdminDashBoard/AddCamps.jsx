@@ -59,8 +59,8 @@ const AddCamps = () => {
   };
 
   return (
-    <div className=" mb-4  bg-gray-300 p-20 rounded-lg">
-      <h3 className="text-4xl text-purple-500 font-bold text-center mb-6">
+    <div className=" mb-4 border p-20 rounded">
+      <h3 className="text-4xl font-bold text-center mb-6">
         Add Camp
       </h3>
       <form onSubmit={handleAddCamps}>
@@ -174,7 +174,7 @@ const AddCamps = () => {
         <input
           type="submit"
           value="Add Camps"
-          className="btn btn-block text-white bg-green-500"
+          className="py-2 rounded hover:bg-gray-400 w-1/3 text-white bg-[#5B74FF]"
         />
       </form>
     </div>

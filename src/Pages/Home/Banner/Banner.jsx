@@ -14,7 +14,7 @@ import img4 from '../../../assets/Medical-camp1.jpg'
 
 export default function Banner () {
   return (
-    <div className='container  py-10 mx-auto'>
+    <div className='container  py-10 mx-auto '>
       <Swiper
         spaceBetween={30}
         centeredSlides={true}
@@ -32,30 +32,29 @@ export default function Banner () {
       >
         <SwiperSlide>
           <Slide
-          
             image={img1}
-            text={<>Crafting Extraordinary Events for <br />Extraordinary People</>}
+            // text={<>Crafting Extraordinary Events for <br />Extraordinary People</>}
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={img2}
-            text={
-            <>
-                Bringing Your Ideas to Life The Ultimate <br /> Event Management Experience
-            </>}
+            // text={
+            // <>
+            //     Bringing Your Ideas to Life The Ultimate <br /> Event Management Experience
+            // </>}
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={img3}
-            text={<>Creating Spectacular Moments, <br />One Event at a Time</>}
+            // text={<>Creating Spectacular Moments, <br />One Event at a Time</>}
           />
         </SwiperSlide>
         <SwiperSlide>
           <Slide
             image={img4}
-            text={<>From Start to Finish Comprehensive <br />Event Management for Every Need</>}
+            // text={<>From Start to Finish Comprehensive <br />Event Management for Every Need</>}
           />
         </SwiperSlide>
       </Swiper>

@@ -101,16 +101,16 @@ const ManageRegisteredCamps = () => {
 
   return (
     <div>
-      <form onSubmit={handleSearch} className="flex mb-4">
+      <form onSubmit={handleSearch} className="flex">
         <input
           type="text"
           placeholder="Search for camp"
           name="search"
-          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+          className=" rounded pl-4 w-2/3 bg-[#EAF0FF]"
         />
         <button
           type="submit"
-          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+          className="py-[6px] text-white font-semibold rounded ml-4 w-1/3 bg-[#5B74FF]"
         >
           Search
         </button>

@@ -1,18 +1,26 @@
 import { useLoaderData, useParams } from "react-router-dom";
 import CampRegistrationModal from "../Components/CampRegistrationModal";
 
-
 const PopularCampDetails = () => {
   const popularData = useLoaderData();
   const { id } = useParams();
   const popular = popularData.find((item) => item._id === id);
-  const { name, image, description, location, participantCount, dateTime, fees, healthcareProfessional } = popular;
+  const {
+    name,
+    image,
+    description,
+    location,
+    participantCount,
+    dateTime,
+    fees,
+    healthcareProfessional,
+  } = popular;
 
   return (
     <div>
       <div className="flex flex-col px-4 mb-6 lg:px-10">
         <div className="flex-1 flex justify-center">
-          <img className="lg:w-[600px] rounded-lg" src={image} alt="" />
+          <img className="lg:w-[600px] rounded" src={image} alt="" />
         </div>
         <div className="flex-1">
           <div className="border-b-2 text-center lg:text-start">
@@ -37,7 +45,14 @@ const PopularCampDetails = () => {
           </div>
         </div>
         <div className="w-full">
-          <button className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]" onClick={() => document.getElementById('campRegistrationModal').showModal()}>Join Camp</button>
+          <button
+            className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]"
+            onClick={() =>
+              document.getElementById("campRegistrationModal").showModal()
+            }
+          >
+            Join Camp
+          </button>
         </div>
       </div>
       <CampRegistrationModal camp={popular} />

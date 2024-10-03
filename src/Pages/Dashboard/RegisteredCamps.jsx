@@ -9,6 +9,7 @@ const RegisteredCamps = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
+  console.log(campData);
 
   useEffect(() => {
     fetch(
@@ -143,11 +144,11 @@ const RegisteredCamps = () => {
           type="text"
           placeholder="Search for camp"
           name="search"
-          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+          className="py-[6px] rounded pl-4 w-2/3 bg-[#EAF0FF]"
         />
         <button
           type="submit"
-          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-green-500"
+          className="py-[6px] hover:bg-black text-white text-xl rounded ml-4 w-1/3 bg-blue-500"
         >
           Search
         </button>

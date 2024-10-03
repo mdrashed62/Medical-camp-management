@@ -1,4 +1,3 @@
-
 import { useLoaderData, useParams } from "react-router-dom";
 import Modal2 from "../Components/Modal2";
 
@@ -6,13 +5,22 @@ const AddedCampDetails = () => {
   const addedData = useLoaderData();
   const { id } = useParams();
   const added = addedData.find((item) => item._id === id);
-  const { name, image, description, location, participantCount, dateTime, fees, healthcareProfessional } = added;
+  const {
+    name,
+    image,
+    description,
+    location,
+    participantCount,
+    dateTime,
+    fees,
+    healthcareProfessional,
+  } = added;
 
   return (
     <div>
       <div className="flex flex-col px-4 mb-6 lg:px-10">
         <div className="flex-1 flex justify-center">
-          <img className="lg:w-[600px] rounded-lg" src={image} alt="" />
+          <img className="lg:w-[600px] rounded" src={image} alt="" />
         </div>
         <div className="flex-1">
           <div className="border-b-2 text-center lg:text-start">
@@ -37,7 +45,12 @@ const AddedCampDetails = () => {
           </div>
         </div>
         <div className="w-full">
-          <button className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]" onClick={() => document.getElementById('modal2').showModal()}>Join Camp</button>
+          <button
+            className="btn text-white w-full mt-2 text-xl font-semibold bg-[#071952]"
+            onClick={() => document.getElementById("modal2").showModal()}
+          >
+            Join Camp
+          </button>
         </div>
       </div>
       <Modal2 camp={added} />

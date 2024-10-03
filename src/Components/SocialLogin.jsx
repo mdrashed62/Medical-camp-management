@@ -40,7 +40,7 @@ const SocialLogin = () => {
       <div className="w-full px-8">
         <button
           onClick={() => handleSocialLogin(googleLogin)}
-          className="btn bg-[#071952] text-white font-semibold px-4 lg:px-8 w-full py-3 rounded-lg "
+          className="hover:bg-gray-400 bg-[#071952] text-white font-semibold px-4 lg:px-8 w-full py-2 rounded "
         >
           Google
         </button>

@@ -11,11 +11,13 @@ const Feedbacks = () => {
   }, []);
 
   return (
-    <div className="mb-6">
-      <h1 className="text-5xl text-center font-bold mb-4">Feedbacks</h1>
+    <div className="mb-6 lg:mt-10">
+      <h1 className="text-5xl text-center font-bold mb-4">Patient Feedbacks from the Camp</h1>
+      <div className="grid grid-cols-1 gap-3 lg:grid-cols-4">
       {feedbacks.map((feedback) => (
-        <FeedbackCard key={feedback._id} afeedback={feedback} />
+        <FeedbackCard key={feedback._id} afeedback={feedback}/>
       ))}
+      </div>
     </div>
   );
 };

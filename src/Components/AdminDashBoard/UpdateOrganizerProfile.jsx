@@ -54,7 +54,7 @@ const UpdateOrganizerProfile = () => {
 
               <div className="form-control mt-6">
                 <input
-                  className="btn p-4 rounded-lg bg-green-500"
+                  className="btn p-4 rounded bg-green-500"
                   type="submit"
                   value="Update"
                 />

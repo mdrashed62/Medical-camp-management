@@ -55,7 +55,7 @@ const Register = () => {
   };
 
   return (
-    <div className="card shrink-0 w-full mb-6 max-w-sm shadow-2xl bg-base-300 mx-auto">
+    <div className="card shrink-0 w-full mb-6 max-w-sm border mx-auto">
       <form onSubmit={handleSubmit(onSubmit)} className="card-body">
         <div className="form-control">
           <label className="label">
@@ -124,18 +124,18 @@ const Register = () => {
           </div>
         </div>
         <div className="form-control mt-6">
-          <button type="submit" className="btn w-full btn-primary">
+          <button type="submit" className=" w-full bg-[#5B74FF] py-2 rounded hover:bg-black text-white">
             Register
           </button>
-          <p className="text-center">
+          <p className="text-center mt-1">
             Already have an account? Please{" "}
-            <span className="text-red-500 font-bold">
+            <span className="text-green-500 font-bold">
               <Link to="/login">Login</Link>
             </span>
           </p>
         </div>
       </form>
-      <SocialLogin /> {/* Optional: Include Social Login component if needed */}
+      <SocialLogin />
     </div>
   );
 };

@@ -53,21 +53,21 @@ const AvailableCamps = () => {
           type="text"
           placeholder="Search for camp"
           name="search"
-          className="py-2 rounded-lg pl-4 w-2/3 bg-slate-300"
+          className=" rounded pl-4 w-2/3 bg-[#EAF0FF]"
         />
         <button
           type="submit"
-          className="btn text-white font-semibold text-xl py-2 rounded-lg ml-4 w-1/3 bg-[#003285]"
+          className="py-[6px] hover:bg-black text-white font-semibold rounded ml-4 w-1/3 bg-[#5B74FF]"
         >
           Search
         </button>
       </form>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
         {currentCamps.map((camp) => (
           <AvailableCampsCards key={camp._id} camp={camp}></AvailableCampsCards>
         ))}
       </div>
-      <div className="flex justify-center mt-4">
+      <div className="flex justify-center mt-4 mb-4">
         {[...Array(totalPages)].map((_, index) => (
           <button
             key={index}

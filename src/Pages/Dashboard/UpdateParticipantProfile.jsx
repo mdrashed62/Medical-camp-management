@@ -21,7 +21,7 @@ const UpdateParticipantProfile = () => {
     return (
       <div>
         <div className="hero-content">
-          <div className="card w-full border max-w-sm shadow-2xl bg-base-100">
+          <div className="card w-full border max-w-sm bg-[#EAF0FF]">
             <div className="card-body">
               <h1 className="text-3xl text-red-500 font-bold text-center mb-5">
                 Update profile
@@ -54,7 +54,7 @@ const UpdateParticipantProfile = () => {
   
                 <div className="form-control mt-6">
                   <input
-                    className="btn p-4 rounded-lg bg-green-500"
+                    className="py-2 hover:bg-black rounded bg-[#5B74FF] text-white"
                     type="submit"
                     value="Update"
                   />

@@ -4,27 +4,27 @@ const AvailableCampsCards = ({ camp }) => {
   const {_id, campName, image, dateTime, location, healthcareProfessional, participantCount, description } = camp;
   console.log(camp, 'frrooewr')
   return (
-    <div className="mb-4">
-      <div className="card  bg-base-100 shadow-xl">
-        <figure className="px-10 pt-10">
-          <img src={image} className="rounded-xl h-64 w-96" />
+    <div className="transform transition-transform duration-300 hover:scale-105 mt-4 lg:mt-10">
+      <div className="card  bg-[#EAF0FF] shadow-xl h-full flex flex-col justify-between">
+        <figure className="p-4">
+          <img src={image} className="rounded-xl h-40"/>
         </figure>
-        <div className="card-body items-center text-center">
+        <div className="card-body">
           <div>
-            <h2 className="text-xl font-semibold">{campName}</h2>
-            <p className="font-bold">Participant: {participantCount}</p>
+            <h2 className="font-semibold">{campName}</h2>
+            <p>Participant: {participantCount}</p>
           </div>
-          <div className="flex justify-between gap-6">
+          <div className="flex justify-between gap-2">
             <h2>Date And Time: {dateTime}$</h2>
           </div>
           <p>Location: {location}</p>
-          <p>description: {description}</p>
+          <p className="text-sm">description: {description}</p>
 
           <p className="font-semibold">{healthcareProfessional}</p>
           <div className="w-full ">
             <Link to={`/addedCampsDetails/${_id}`}>
               {" "}
-              <button className="btn mt-4 md:20 lg:px-24 text-white bg-emerald-500">
+              <button className="py-[6px] hover:bg-black hover:text-white rounded mt-4 w-full text-white bg-[#5B74FF]">
                 View Details
               </button>
             </Link>

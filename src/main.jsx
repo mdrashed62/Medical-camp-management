@@ -20,7 +20,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
    <div className='px-2'>
    <AuthProviders>
     <QueryClientProvider client={queryClient}>
-    <div className='max-w-6xl mx-auto'>
+    <div className='container mx-auto'>
     <RouterProvider router={router}/>
     </div>  
     </QueryClientProvider>

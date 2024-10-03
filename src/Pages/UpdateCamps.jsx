@@ -89,7 +89,7 @@ const UpdateCamps = () => {
   const formattedDate = dateTime ? formatDate(dateTime) : "";
 
   return (
-    <div className=" mb-4  bg-gray-300 p-20 rounded-lg">
+    <div className=" mb-4  bg-gray-300 p-20 rounded">
       <h3 className="text-4xl text-[#071952] font-bold text-center mb-6">
         Update the Camp
       </h3>
