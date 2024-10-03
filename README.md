@@ -1,24 +1,21 @@
-# Medical Camp Management
-
-Organizer Email: checkforadmin@gamil.com
-Organizer Pass: 123456
-
-# Live site URL: (https://medical-camp-management-ada50.web.app)
-
+# Medical Camp Managemen
+# Overview of the Project  
+Medical Camp Management is an integrated platform designed to streamline the organization and management of medical camps. It allows users to register for camps, manage profiles, and handle payments efficiently. The system provides comprehensive CRUD operations, authentication, and detailed payment histories, ensuring a seamless experience for both users and administrators. The goal is to make medical camp management effortless, enabling organizers to focus on delivering quality healthcare services.
+# Live site URL:  
+(https://medical-camp-management-ada50.web.app)
+# Technology Used
+React js, JavaScript,Node js, Express js, MongoDB, No-SQL, Html, CSS, Tailwind, DaisyUI, React Router, Context API, Chart js, Swiper js, JWT, React Hook
+form, Rest API
+# Features
 1) Comprehensive Search and Sorting: Users can easily search and sort through a variety of medical camps to find the one that best suits their needs.
+  
+2) Profile Management: Users can update their information during registration and view/edit their profiles at any time.
 
-2) Firebase Authentication: Secure and reliable user authentication with Firebase, enabling users to register and log in seamlessly.
-
-3) Profile Management: Users can update their information during registration and view/edit their profiles at any time.
-
-4) Admin Dashboard: A robust admin dashboard that allows administrators to manage the website, including camp details, user information, and overall site content.
-
-5) Camp Booking System: Users can conveniently book a camp for medical services, ensuring a smooth and efficient registration process.
-
-6) Pagination Feature: The website uses pagination to improve user experience, making it easier to navigate through multiple pages of camp listings.
-
-7) User-Friendly Interface: Designed with a user-friendly interface to ensure ease of use for all visitors, including those with minimal technical skills.
-
-9) Real-Time Updates: The website provides real-time updates on camp availability and user bookings, ensuring all information is current and accurate.
-
-10) Camp Booking System: Users can conveniently book a camp for medical services, ensuring a smooth and efficient registration process.
+3) Admin Dashboard: A robust admin dashboard that allows administrators to manage the website, including camp details, user information, and overall site content.
+# Project Clone and Local Run Instructions
+1) Clone the repository: [git clone https://github.com/username/medical-camp-management.git](https://github.com/mdrashed62/Medical-camp-management.git)](https://github.com/mdrashed62/Medical-camp-management.git)
+2) Navigate to the project directory: cd medical-camp-management
+3) Install dependencies: npm install
+4) Set up environment variables: Create a .env file in the root directory.
+5) Start the development server: nodemon index.js
+6) Access the project: Open your web browser and navigate to http://localhost:5000
